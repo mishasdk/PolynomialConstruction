@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<?import com.bulumutka.polyconstr.ui.ResizableCanvas?>
+<?import javafx.scene.canvas.Canvas?>
+<?import com.bulumutka.polyconstr.ui.GraphCanvas?>
+<GridPane fx:id="mainPane"
+          fx:controller="com.bulumutka.polyconstr.controllers.MainController"
+          stylesheets="@../styles/styles.css"
+          xmlns:fx="http://javafx.com/fxml">
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints prefHeight="50"/>
+        <RowConstraints vgrow="ALWAYS"/>
+    </rowConstraints>
+
+    <BorderPane GridPane.rowIndex="0"
+                GridPane.columnIndex="0"
+                style="-fx-background-color: cornflowerblue">
+        <center>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="vertexButton"
+                        styleClass="vertex-button"
+                        text="Vertex"/>
+                <Button fx:id="edgeButton"
+                        styleClass="edge-button"
+                        text="Edge"/>
+                <Button fx:id="removeButton"
+                        text="Remove"/>
+                <Button fx:id="startVertexButton"
+                        text="Start"/>
+                <Button fx:id="clearButton"
+                        text="Clear"/>
+            </HBox>
+        </center>
+
+        <right>
+            <HBox alignment="CENTER">
+                <Button alignment="CENTER" fx:id="countButton"
+                        text="Count"/>
+            </HBox>
+        </right>
+    </BorderPane>
+
+    <StackPane fx:id="drawArea"
+               GridPane.rowIndex="1"
+               GridPane.columnIndex="0"
+               style="-fx-background-color: #738C73">
+        <GraphCanvas fx:id="canvas"/>
+    </StackPane>
+</GridPane>

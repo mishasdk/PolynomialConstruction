@@ -1,0 +1,85 @@
+package com.bulumutka.polyconstr.models;
+
+import com.bulumutka.polyconstr.ui.GraphCanvas;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+public class GraphEditor {
+    private final GraphBuilder builder = new GraphBuilder();
+    private final ObservableList<Drawable> components =
+            FXCollections.observableList(new ArrayList<>());
+    private EditMode mode = EditMode.NONE;
+    private Stack<Vertex2D<Integer>> stack = new Stack<>();
+
+    public void setEditMode(EditMode mode) {
+        System.out.println("setEditMode: " + mode);
+        this.mode = mode;
+    }
+
+    public GraphEditor(GraphCanvas canvas) {
+        canvas.setData(components);
+        canvas.setOnMouseClicked(event -> {
+            System.out.println("canvas was clicked at: " + event.getX() + " " + event.getY());
+
+            switch (mode) {
+                case ADD_EDGE:
+                    addEdge(event.getX(), event.getY());
+                    break;
+                case ADD_VERTEX:
+                    addVertex(event.getX(), event.getY());
+                    break;
+                case REMOVE:
+                    removeComponent(event.getX(), event.getY());
+                    break;
+                default:
+                    System.out.println("NONE action.");
+                    break;
+            }
+        });
+
+        components.addListener((ListChangeListener<? super Drawable>) changeEvent -> {
+            System.out.println("Data components changed.");
+            canvas.draw();
+        });
+    }
+
+    public void reset() {
+        builder.reset();
+        mode = EditMode.NONE;
+        components.clear();
+    }
+
+    private void removeComponent(double x, double y) {
+        components.removeIf(comp -> comp.contains(x, y));
+    }
+
+    private void addVertex(double x, double y) {
+        builder.addVertex();
+        components.add(new Vertex2D<>(0, x, y));
+    }
+
+    private void addEdge(double x, double y) {
+        Vertex2D<Integer> vertex = getVertex(x, y);
+        if (vertex == null) {
+            return;
+        }
+        stack.push(vertex);
+        if (stack.size() == 2) {
+            var source = stack.pop();
+            var target = stack.pop();
+            components.add(new Edge2D<>(source, target));
+        }
+    }
+
+    Vertex2D<Integer> getVertex(double x, double y) {
+        var elems = components.filtered(d -> d instanceof Vertex2D && d.contains(x, y));
+        if (elems.isEmpty()) {
+            return null;
+        }
+        return (Vertex2D<Integer>) elems.get(0);
+    }
+}

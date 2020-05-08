@@ -1,5 +1,6 @@
 package com.bulumutka.polyconstr;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,13 +9,13 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class Main extends Application {
+public class Sample extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects
-                .requireNonNull(getClass().getClassLoader().getResource("views/MainView.fxml")));
-        primaryStage.setTitle("Hello World");
+                .requireNonNull(getClass().getClassLoader().getResource("views/SampleView.fxml")));
+        primaryStage.setTitle("Sample");
         primaryStage.setScene(new Scene(root, 960, 540));
         primaryStage.show();
     }

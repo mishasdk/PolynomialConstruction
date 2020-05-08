@@ -1,8 +1,6 @@
 package com.bulumutka.polyconstr.models;
 
-import com.bulumutka.polyconstr.ui.DialogWindow;
-import com.bulumutka.polyconstr.ui.GraphCanvas;
-import com.sun.javafx.animation.KeyValueType;
+import com.bulumutka.polyconstr.ui.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -47,7 +45,6 @@ public class GraphEditor {
                                 ((Vertex2D) c).setIsStart(false);
                             }
                         }
-                        System.out.println("DFGSRQAGER");
                         vertex.setIsStart(true);
                         canvas.draw();
                     }

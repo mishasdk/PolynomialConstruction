@@ -1,10 +1,5 @@
 package com.bulumutka.polyconstr.ui;
 
-import com.bulumutka.polyconstr.models.Drawable;
-import com.bulumutka.polyconstr.models.Edge2D;
-import com.bulumutka.polyconstr.models.Vertex2D;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class GraphCanvas extends ResizableCanvas {

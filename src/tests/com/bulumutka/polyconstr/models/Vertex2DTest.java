@@ -1,7 +1,7 @@
 package com.bulumutka.polyconstr.models;
 
+import com.bulumutka.polyconstr.ui.Vertex2D;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 
 import static org.junit.jupiter.api.Assertions.*;
 

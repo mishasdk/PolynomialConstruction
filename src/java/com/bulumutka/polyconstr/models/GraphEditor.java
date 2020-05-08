@@ -1,6 +1,8 @@
 package com.bulumutka.polyconstr.models;
 
+import com.bulumutka.polyconstr.ui.DialogWindow;
 import com.bulumutka.polyconstr.ui.GraphCanvas;
+import com.sun.javafx.animation.KeyValueType;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -12,8 +14,9 @@ public class GraphEditor {
     private final GraphBuilder builder = new GraphBuilder();
     private final ObservableList<Drawable> components =
             FXCollections.observableList(new ArrayList<>());
+    private final Stack<Vertex2D<Integer>> stack = new Stack<>();
     private EditMode mode = EditMode.NONE;
-    private Stack<Vertex2D<Integer>> stack = new Stack<>();
+    private int vertexNumber = 0;
 
     public void setEditMode(EditMode mode) {
         System.out.println("setEditMode: " + mode);
@@ -34,6 +37,20 @@ public class GraphEditor {
                     break;
                 case REMOVE:
                     removeComponent(event.getX(), event.getY());
+                    break;
+                case START_VERTEX:
+                    var vertex = getVertex(event.getX(), event.getY());
+                    if (vertex != null) {
+                        builder.setStartVertex(vertex.getVertex());
+                        for (var c : components) {
+                            if (c instanceof Vertex2D) {
+                                ((Vertex2D) c).setIsStart(false);
+                            }
+                        }
+                        System.out.println("DFGSRQAGER");
+                        vertex.setIsStart(true);
+                        canvas.draw();
+                    }
                     break;
                 default:
                     System.out.println("NONE action.");
@@ -59,7 +76,7 @@ public class GraphEditor {
 
     private void addVertex(double x, double y) {
         builder.addVertex();
-        components.add(new Vertex2D<>(0, x, y));
+        components.add(new Vertex2D<>(vertexNumber++, x, y));
     }
 
     private void addEdge(double x, double y) {
@@ -71,15 +88,18 @@ public class GraphEditor {
         if (stack.size() == 2) {
             var source = stack.pop();
             var target = stack.pop();
-            components.add(new Edge2D<>(source, target));
+            DialogWindow.edgeWeightDialog().ifPresent(time -> {
+                components.add(new Edge2D<>(source, target, time));
+                builder.addEdge(source.getVertex(), target.getVertex(), time);
+            });
         }
     }
 
-    Vertex2D<Integer> getVertex(double x, double y) {
-        var elems = components.filtered(d -> d instanceof Vertex2D && d.contains(x, y));
-        if (elems.isEmpty()) {
+    private Vertex2D<Integer> getVertex(double x, double y) {
+        var element = components.filtered(d -> d instanceof Vertex2D && d.contains(x, y));
+        if (element.isEmpty()) {
             return null;
         }
-        return (Vertex2D<Integer>) elems.get(0);
+        return (Vertex2D<Integer>) element.get(0);
     }
 }

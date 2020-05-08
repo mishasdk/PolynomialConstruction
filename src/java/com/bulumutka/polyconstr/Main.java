@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects
                 .requireNonNull(getClass().getClassLoader().getResource("views/MainView.fxml")));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Polynomial construction");
         primaryStage.setScene(new Scene(root, 960, 540));
         primaryStage.show();
     }

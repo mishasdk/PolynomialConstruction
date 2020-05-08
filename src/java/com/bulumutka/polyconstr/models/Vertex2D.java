@@ -9,6 +9,7 @@ public class Vertex2D<Vertex> implements Drawable {
     private final Vertex vertex;
     private final double x;
     private final double y;
+    private boolean start = false;
 
     public Vertex2D(Vertex vertex, double x, double y) {
         this.vertex = vertex;
@@ -28,12 +29,19 @@ public class Vertex2D<Vertex> implements Drawable {
         return vertex;
     }
 
+    public void setIsStart(boolean isStart) {
+        start = isStart;
+    }
+
     @Override
     public void draw(Canvas canvas) {
         double x = getX();
         double y = getY();
         var g = canvas.getGraphicsContext2D();
         g.setStroke(Color.BLACK);
+        if (start) {
+            g.setStroke(Color.BLUE);
+        }
         g.strokeOval(centerX(), centerY(), 2 * VERTEX_RADIUS, 2 * VERTEX_RADIUS);
     }
 

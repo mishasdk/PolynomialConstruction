@@ -6,13 +6,16 @@ import java.util.List;
 public class GraphBuilder {
     private int vertexNumber = 0;
     private int currentEdgeId = 0;
+    private int startVertex = -1;
     private List<Edge> edges = new ArrayList<>();
 
-    public void addEdge(int source, int target, int time) {
+    public void addEdge(int source, int target, double time) {
+        System.out.println("Graph builder: " + "add edge " + source + " " + target + " " + time);
         edges.add(new Edge(currentEdgeId++, source, target, time));
     }
 
     public void addVertex() {
+        System.out.println("Graph builder: " + "add vertex " + vertexNumber);
         vertexNumber++;
     }
 
@@ -34,6 +37,10 @@ public class GraphBuilder {
         vertexNumber--;
     }
 
+    public void setStartVertex(int vertex) {
+        startVertex = vertex;
+    }
+
     public Graph build() {
         for (int i = 0; i != edges.size(); ++i) {
             edges.get(i).id = i;
@@ -46,7 +53,7 @@ public class GraphBuilder {
             adjacencyList.get(edge.source).add(edge.target);
             adjacencyList.get(edge.target).add(edge.source);
         }
-        return new Graph(edges, adjacencyList);
+        return new Graph(edges, adjacencyList, startVertex);
     }
 
     public void reset() {

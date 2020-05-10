@@ -7,11 +7,12 @@ public class GraphBuilder {
     private int vertexNumber = 0;
     private int currentEdgeId = 0;
     private int startVertex = -1;
-    private List<Edge> edges = new ArrayList<>();
+    private List<GraphEdge> edges = new ArrayList<>();
 
     public void addEdge(int source, int target, double time) {
         System.out.println("Graph builder: " + "add edge " + source + " " + target + " " + time);
-        edges.add(new Edge(currentEdgeId++, source, target, time));
+        edges.add(new GraphEdge(currentEdgeId++, source, target, time));
+        edges.add(new GraphEdge(currentEdgeId++, target, source, time));
     }
 
     public void addVertex() {
@@ -41,7 +42,7 @@ public class GraphBuilder {
         startVertex = vertex;
     }
 
-    public Graph build() {
+    public MetricGraph build() {
         for (int i = 0; i != edges.size(); ++i) {
             edges.get(i).id = i;
         }
@@ -50,10 +51,9 @@ public class GraphBuilder {
             adjacencyList.add(new ArrayList<>());
         }
         for (var edge : edges) {
-            adjacencyList.get(edge.source).add(edge.target);
-            adjacencyList.get(edge.target).add(edge.source);
+            adjacencyList.get(edge.source).add(edge.id);
         }
-        return new Graph(edges, adjacencyList, startVertex);
+        return new MetricGraph(edges, adjacencyList, startVertex);
     }
 
     public void reset() {

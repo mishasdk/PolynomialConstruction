@@ -1,4 +1,4 @@
 package com.bulumutka.polyconstr.models;
 
-public class Vertex {
+public interface Vertex {
 }

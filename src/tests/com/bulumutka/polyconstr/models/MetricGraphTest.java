@@ -7,15 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class MetricGraphTest {
     @Test
     public void createTest() {
-        GraphBuilder builder = new GraphBuilder();
-        builder.addVertex();
-        builder.addVertex();
-        builder.addVertex();
-        builder.addVertex();
+        GraphBuilder builder = new GraphBuilder(4);
         builder.addEdge(0, 1, 0);
         builder.addEdge(1, 2, 0);
         builder.addEdge(1, 3, 0);
-        Graph<GraphEdge, Integer> g = builder.build();
+        var g = builder.build();
 
         assertEquals(4, g.getVertexNumber());
 
@@ -30,5 +26,15 @@ class MetricGraphTest {
         assertEquals(3, g.outgoingEdges(1).size());
         assertEquals(1, g.outgoingEdges(0).size());
         assertEquals(0, g.outgoingEdges(4).size());
+    }
+
+    @Test
+    public void showGraph() {
+        GraphBuilder builder = new GraphBuilder(4);
+        builder.addEdge(0, 1, 0);
+        builder.addEdge(1, 2, 0);
+        builder.addEdge(1, 3, 0);
+        var g = builder.build();
+        System.out.println(g);
     }
 }

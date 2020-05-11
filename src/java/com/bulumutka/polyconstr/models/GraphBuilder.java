@@ -6,13 +6,26 @@ import java.util.List;
 public class GraphBuilder {
     private int vertexNumber = 0;
     private int currentEdgeId = 0;
-    private int startVertex = -1;
+    private int root = 0;
     private List<GraphEdge> edges = new ArrayList<>();
+
+    public GraphBuilder() {
+    }
+
+    public GraphBuilder(int vertexNumber) {
+        addVertex(vertexNumber);
+    }
 
     public void addEdge(int source, int target, double time) {
         System.out.println("Graph builder: " + "add edge " + source + " " + target + " " + time);
         edges.add(new GraphEdge(currentEdgeId++, source, target, time));
         edges.add(new GraphEdge(currentEdgeId++, target, source, time));
+    }
+
+    public void addVertex(int number) {
+        for (var i = 0; i != number; ++i) {
+            addVertex();
+        }
     }
 
     public void addVertex() {
@@ -38,8 +51,8 @@ public class GraphBuilder {
         vertexNumber--;
     }
 
-    public void setStartVertex(int vertex) {
-        startVertex = vertex;
+    public void setRoot(int vertex) {
+        root = vertex;
     }
 
     public MetricGraph build() {
@@ -53,7 +66,7 @@ public class GraphBuilder {
         for (var edge : edges) {
             adjacencyList.get(edge.source).add(edge.id);
         }
-        return new MetricGraph(edges, adjacencyList, startVertex);
+        return new MetricGraph(edges, adjacencyList, root);
     }
 
     public void reset() {

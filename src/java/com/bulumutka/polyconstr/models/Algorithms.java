@@ -19,24 +19,31 @@ public class Algorithms {
         return visitor.getBridges();
     }
 
+    public static <E extends Edge<V>, V> Set<E> findMarks(Graph<E, V> g, V originVertex,
+                                                            V targetVertex) {
+        MarksVisitor<V, E> visitor = new MarksVisitor<>(targetVertex);
+        depthFirstSearch(g, originVertex, visitor);
+        return visitor.getMarks();
+    }
+
     public static <E, V> void depthFirstSearch(Graph<E, V> g, V v, DfsVisitor<V, E> visitor) {
-        visitor.discoverVertex(v);
         Set<V> set = new HashSet<>();
         dfs(g, v, visitor, set);
     }
 
     private static <E, V> void dfs(Graph<E, V> g, V vertex, DfsVisitor<V, E> visitor, Set<V> used) {
         used.add(vertex);
-        visitor.examineVertex(vertex);
+        visitor.discoverVertex(vertex);
         for (var edge : g.outgoingEdges(vertex)) {
             var target = g.getTarget(edge);
             visitor.examineEdge(edge);
 
             if (!used.contains(target)) {
                 visitor.goEdge(edge);
-                visitor.discoverVertex(target);
                 dfs(g, target, visitor, used);
                 visitor.returnEdge(edge);
+            } else {
+                visitor.backEdge(edge);
             }
         }
     }

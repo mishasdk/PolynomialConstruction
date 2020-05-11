@@ -10,7 +10,7 @@ public class BridgesVisitor<V, E extends Edge<V>> implements DfsVisitor<V, E> {
     private final Map<V, Integer> fup = new HashMap<>();
 
     @Override
-    public void examineVertex(V vertex) {
+    public void discoverVertex(V vertex) {
         timeIn.put(vertex, time);
         fup.put(vertex, time);
         ++time;

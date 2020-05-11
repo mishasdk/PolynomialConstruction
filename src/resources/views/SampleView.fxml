@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.bulumutka.polyconstr.controllers.SampleController"
+          style="-fx-background-color: #1b6d85"
+          gridLinesVisible="true"
+          prefHeight="400.0" prefWidth="600.0">
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS"/>
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS"/>
+        <RowConstraints vgrow="ALWAYS"/>
+    </rowConstraints>
+
+    <HBox spacing="15"
+          style="-fx-background-color: #FFB94F"
+          GridPane.rowIndex="0" GridPane.columnIndex="0" alignment="CENTER">
+        <Button text="First"/>
+        <Button text="Second"/>
+        <Button text="Third"/>
+    </HBox>
+
+    <HBox spacing="15"
+          style="-fx-background-color: #FFB94F"
+          GridPane.rowIndex="0" GridPane.columnIndex="1"
+    >
+        <Button text="First"/>
+        <Button text="Second"/>
+        <Button text="Third"/>
+    </HBox>
+
+    <HBox spacing="15"
+          style="-fx-background-color: #FFB94F"
+          GridPane.rowIndex="1" GridPane.columnIndex="0">
+        <Button text="First"/>
+        <Button text="Second"/>
+        <Button text="Third"/>
+    </HBox>
+
+    <HBox spacing="15"
+          style="-fx-background-color: #FFB94F"
+          GridPane.rowIndex="1" GridPane.columnIndex="1">
+        <Button text="First"/>
+        <Button text="Second"/>
+        <Button text="Third"/>
+    </HBox>
+
+</GridPane>

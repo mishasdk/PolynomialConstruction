@@ -10,4 +10,3 @@ public class MathHelper {
         return Math.sqrt(shiftX * shiftX + shiftY * shiftY);
     }
 }
-

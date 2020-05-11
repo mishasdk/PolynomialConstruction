@@ -29,8 +29,7 @@ public class BridgesVisitor<V, E extends Edge<V>> implements DfsVisitor<V, E> {
 
     @Override
     public void returnEdge(E edge) {
-        fup.put(edge.getSource(),
-                Math.min(fup.get(edge.getSource()), fup.get(edge.getTarget())));
+        fup.put(edge.getSource(), Math.min(fup.get(edge.getSource()), fup.get(edge.getTarget())));
         if (fup.get(edge.getTarget()) > timeIn.get(edge.getSource())) {
             bridges.add(edge);
         }

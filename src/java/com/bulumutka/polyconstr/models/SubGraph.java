@@ -20,7 +20,7 @@ public class SubGraph implements Graph<GraphEdge, Integer> {
     public List<GraphEdge> outgoingEdges(Integer vertex) {
         List<GraphEdge> edges = otherGraph.outgoingEdges(vertex);
         List<GraphEdge> filteredEdges = new ArrayList<>();
-        for (var edge: edges) {
+        for (var edge : edges) {
             if (predicate.test(edge)) {
                 filteredEdges.add(edge);
             }

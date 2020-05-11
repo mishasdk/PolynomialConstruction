@@ -78,5 +78,4 @@ class SubGraphTest {
         assertEquals(6, sg.getVertexNumber());
         assertTrue(Algorithms.isConnected(sg, sg.getStartVertex()));
     }
-
 }

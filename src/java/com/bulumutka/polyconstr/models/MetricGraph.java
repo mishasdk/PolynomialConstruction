@@ -17,7 +17,7 @@ public class MetricGraph implements Graph<GraphEdge, Integer> {
     @Override
     public List<GraphEdge> outgoingEdges(Integer vertex) {
         List<GraphEdge> edges = new ArrayList<>();
-        for (var id: adjacencyList.get(vertex)) {
+        for (var id : adjacencyList.get(vertex)) {
             edges.add(this.edges.get(id));
         }
         return edges;

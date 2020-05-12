@@ -24,11 +24,6 @@ public class MetricGraph extends AbstractGraph<GraphEdge, Integer> {
     }
 
     @Override
-    public Integer getTarget(GraphEdge edge) {
-        return edge.target;
-    }
-
-    @Override
     public Integer getVertexNumber() {
         return adjacencyList.size();
     }

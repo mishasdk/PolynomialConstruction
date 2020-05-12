@@ -36,11 +36,6 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
     }
 
     @Override
-    public Integer getTarget(GraphEdge edge) {
-        return otherGraph.getTarget(edge);
-    }
-
-    @Override
     public Integer getVertexNumber() {
         if (vertexNumber != -1) {
             return vertexNumber;

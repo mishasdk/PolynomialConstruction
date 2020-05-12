@@ -62,4 +62,21 @@ class SubGraphTest {
         assertEquals(6, sg.getVertexNumber());
         assertTrue(Algorithms.isConnected(sg, sg.getStartVertex()));
     }
+
+    @Test
+    public void showSubGraphTest() {
+        GraphBuilder builder = new GraphBuilder(5);
+        builder.addEdge(0, 1, 0);
+        builder.addEdge(0, 2, 0);
+        builder.addEdge(0, 3, 1);
+        builder.addEdge(0, 4, 1);
+        builder.setRoot(0);
+        var g = new SubGraph(builder.build(), edge -> edge.time != 0);
+        assertEquals(2, g.outgoingEdges(0).size());
+        System.out.println(g);
+
+        g = new SubGraph(builder.build(), edge -> edge.time == 0);
+        assertEquals(2, g.outgoingEdges(0).size());
+        System.out.println(g);
+    }
 }

@@ -21,9 +21,10 @@ public class SubGraphBruteForce {
             return null;
         }
         ++mask;
+        System.out.println("Mask: " + mask);
         return new SubGraph(graph, edge -> {
             int bit = edge.id / 2;
-            return (mask & 1L << bit) == 1;
+            return (mask & 1L << bit) != 0;
         });
     }
 }

@@ -2,12 +2,10 @@ package com.bulumutka.polyconstr.models;
 
 import java.util.List;
 
-public interface Graph<Edge, Vertex> {
-    Vertex getRoot();
+public interface Graph<E extends Edge<V>, V> {
+    V getRoot();
 
-    List<Edge> outgoingEdges(Vertex vertex);
-
-    Vertex getTarget(Edge edge);
+    List<E> outgoingEdges(V vertex);
 
     Integer getVertexNumber();
 

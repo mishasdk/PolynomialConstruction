@@ -7,7 +7,7 @@ public class GraphBuilder {
     private int vertexNumber = 0;
     private int currentEdgeId = 0;
     private int root = 0;
-    private List<GraphEdge> edges = new ArrayList<>();
+    private final List<GraphEdge> edges = new ArrayList<>();
 
     public GraphBuilder() {
     }

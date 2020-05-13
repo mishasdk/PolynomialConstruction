@@ -16,7 +16,6 @@ public class ConnectedVisitor<E, V> implements DfsVisitor<E, V> {
     }
 
     public boolean isConnected() {
-        System.out.println(visitedVertices);
         return visitedVertices == vertexNumber;
     }
 }

@@ -1,4 +1,4 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib;
 
 public class MathHelper {
     private MathHelper() {

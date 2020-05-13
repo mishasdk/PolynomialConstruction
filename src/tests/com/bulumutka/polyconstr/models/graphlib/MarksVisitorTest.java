@@ -1,5 +1,7 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib;
 
+import com.bulumutka.polyconstr.models.graphlib.graphlib.Algorithms;
+import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,7 +46,7 @@ class MarksVisitorTest {
         m = Algorithms.findMarks(g, 0, 4);
 
         for (var e : m) {
-            System.out.println(String.format("E: s = %d, t = %d", e.source, e.target));
+            System.out.println(String.format("E: s = %d, t = %d", e.getSource(), e.getTarget()));
         }
 
         assertEquals(4, m.size());

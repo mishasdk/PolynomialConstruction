@@ -1,4 +1,6 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib.graphlib;
+
+import com.bulumutka.polyconstr.models.graphlib.graphlib.base.AbstractGraph;
 
 import java.util.ArrayList;
 import java.util.HashSet;

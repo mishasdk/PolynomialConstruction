@@ -1,5 +1,9 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib;
 
+import com.bulumutka.polyconstr.models.graphlib.graphlib.Algorithms;
+import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
+import com.bulumutka.polyconstr.models.graphlib.graphlib.MetricGraph;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +17,7 @@ class ConnectedVisitorTest {
         builder.addEdge(1, 3, 0);
         MetricGraph g = builder.build();
 
-        assertTrue(Algorithms.isConnected(g, 0));
+        Assertions.assertTrue(Algorithms.isConnected(g, 0));
 
         builder.addVertex();
         g = builder.build();

@@ -1,5 +1,10 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib;
 
+import com.bulumutka.polyconstr.models.graphlib.graphlib.Algorithms;
+import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
+import com.bulumutka.polyconstr.models.graphlib.graphlib.MetricGraph;
+import com.bulumutka.polyconstr.models.graphlib.graphlib.SubGraph;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +45,7 @@ class SubGraphTest {
         MetricGraph g = builder.build();
         var sg = new SubGraph(g, edge -> edge.time != 0);
 
-        assertFalse(Algorithms.isConnected(sg, sg.getStartVertex()));
+        Assertions.assertFalse(Algorithms.isConnected(sg, sg.getStartVertex()));
     }
 
     @Test

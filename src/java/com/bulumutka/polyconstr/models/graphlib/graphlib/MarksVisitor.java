@@ -1,11 +1,14 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib.graphlib;
+
+import com.bulumutka.polyconstr.models.graphlib.graphlib.base.DfsVisitor;
+import com.bulumutka.polyconstr.models.graphlib.graphlib.base.Edge;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class MarksVisitor<V, E extends Edge<V>> implements DfsVisitor<V, E> {
+public class MarksVisitor<E extends Edge<V>, V> implements DfsVisitor<E, V> {
     private final Map<V, E> parent = new HashMap<>();
     private final Set<V> found = new HashSet<>();
     private final Set<E> marks = new HashSet<>();

@@ -1,4 +1,6 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib.graphlib.base;
+
+import com.bulumutka.polyconstr.models.graphlib.graphlib.Algorithms;
 
 public abstract class AbstractGraph<E extends Edge<V>, V> implements Graph<E, V> {
     @Override

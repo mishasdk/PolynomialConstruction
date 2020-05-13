@@ -1,4 +1,4 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib.graphlib.base;
 
 import java.util.List;
 

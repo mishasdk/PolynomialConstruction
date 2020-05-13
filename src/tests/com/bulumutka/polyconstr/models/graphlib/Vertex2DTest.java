@@ -1,4 +1,4 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib;
 
 import com.bulumutka.polyconstr.ui.Vertex2D;
 import org.junit.jupiter.api.Test;

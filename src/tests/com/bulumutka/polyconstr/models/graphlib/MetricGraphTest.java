@@ -1,5 +1,6 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib;
 
+import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

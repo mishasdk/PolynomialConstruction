@@ -1,5 +1,6 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib;
 
+import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
 import com.bulumutka.polyconstr.ui.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;

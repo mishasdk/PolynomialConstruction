@@ -1,6 +1,8 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib.graphlib;
 
-public class ConnectedVisitor<Vertex, Edge> implements DfsVisitor<Vertex, Edge> {
+import com.bulumutka.polyconstr.models.graphlib.graphlib.base.DfsVisitor;
+
+public class ConnectedVisitor<E, V> implements DfsVisitor<E, V> {
     private final int vertexNumber;
     private int visitedVertices = 0;
 
@@ -9,12 +11,11 @@ public class ConnectedVisitor<Vertex, Edge> implements DfsVisitor<Vertex, Edge> 
     }
 
     @Override
-    public void discoverVertex(Vertex vertex) {
+    public void discoverVertex(V vertex) {
         visitedVertices++;
     }
 
     public boolean isConnected() {
-        System.out.println(visitedVertices);
         return visitedVertices == vertexNumber;
     }
 }

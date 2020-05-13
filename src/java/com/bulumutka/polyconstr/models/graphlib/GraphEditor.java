@@ -1,5 +1,6 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib;
 
+import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
 import com.bulumutka.polyconstr.ui.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -39,7 +40,7 @@ public class GraphEditor {
                 case START_VERTEX:
                     var vertex = getVertex(event.getX(), event.getY());
                     if (vertex != null) {
-                        builder.setStartVertex(vertex.getVertex());
+                        builder.setRoot(vertex.getVertex());
                         for (var c : components) {
                             if (c instanceof Vertex2D) {
                                 ((Vertex2D) c).setIsStart(false);

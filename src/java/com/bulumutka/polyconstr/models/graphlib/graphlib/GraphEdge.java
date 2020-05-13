@@ -1,10 +1,12 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib.graphlib;
+
+import com.bulumutka.polyconstr.models.graphlib.graphlib.base.Edge;
 
 public class GraphEdge implements Edge<Integer> {
-    int id;
+    public int id;
     int source;
     int target;
-    double time;
+    public double time;
 
     public GraphEdge(int id, int source, int target, double time) {
         this.id = id;

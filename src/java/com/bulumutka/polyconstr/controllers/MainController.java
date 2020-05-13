@@ -1,7 +1,7 @@
 package com.bulumutka.polyconstr.controllers;
 
-import com.bulumutka.polyconstr.models.EditMode;
-import com.bulumutka.polyconstr.models.GraphEditor;
+import com.bulumutka.polyconstr.models.graphlib.EditMode;
+import com.bulumutka.polyconstr.models.graphlib.GraphEditor;
 import com.bulumutka.polyconstr.ui.GraphCanvas;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

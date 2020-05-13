@@ -1,8 +1,11 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.models.graphlib.graphlib;
+
+import com.bulumutka.polyconstr.models.graphlib.graphlib.base.DfsVisitor;
+import com.bulumutka.polyconstr.models.graphlib.graphlib.base.Edge;
 
 import java.util.*;
 
-public class BridgesVisitor<V, E extends Edge<V>> implements DfsVisitor<V, E> {
+public class BridgesVisitor<E extends Edge<V>, V> implements DfsVisitor<E, V> {
     private int time = 0;
     private final Set<E> bridges = new HashSet<>();
     private final Map<V, V> parent = new HashMap<>();
@@ -10,7 +13,7 @@ public class BridgesVisitor<V, E extends Edge<V>> implements DfsVisitor<V, E> {
     private final Map<V, Integer> fup = new HashMap<>();
 
     @Override
-    public void examineVertex(V vertex) {
+    public void discoverVertex(V vertex) {
         timeIn.put(vertex, time);
         fup.put(vertex, time);
         ++time;

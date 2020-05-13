@@ -76,8 +76,4 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
         }
         return edges;
     }
-
-    public Integer getStartVertex() {
-        return otherGraph.getRoot();
-    }
 }

@@ -8,12 +8,12 @@ public class SubGraphBruteForce {
     private final MetricGraph graph;
     private final long maxMask;
 
-    public SubGraphBruteForce(MetricGraph graph) throws GraphParameterException {
-        if (graph.getEdgesNumber() > MAX_EDGE_NUMBER) {
+    public SubGraphBruteForce(MetricGraph g) throws GraphParameterException {
+        if (g.getEdgesNumber() > MAX_EDGE_NUMBER) {
             throw new GraphParameterException("Graph should not has more than 63 edges.");
         }
-        this.graph = graph;
-        maxMask = 1L << graph.getEdgesNumber();
+        this.graph = g;
+        maxMask = 1L << g.getEdgesNumber();
     }
 
     public SubGraph next() {
@@ -21,7 +21,6 @@ public class SubGraphBruteForce {
             return null;
         }
         ++mask;
-        System.out.println("Mask: " + mask);
         return new SubGraph(graph, edge -> {
             int bit = edge.id / 2;
             return (mask & 1L << bit) != 0;

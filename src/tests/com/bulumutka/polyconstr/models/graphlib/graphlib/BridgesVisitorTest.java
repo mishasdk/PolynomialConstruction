@@ -1,11 +1,8 @@
 package com.bulumutka.polyconstr.models.graphlib.graphlib;
 
-import com.bulumutka.polyconstr.models.graphlib.graphlib.Algorithms;
-import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
-import com.bulumutka.polyconstr.models.graphlib.graphlib.MetricGraph;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BridgesVisitorTest {
     @Test

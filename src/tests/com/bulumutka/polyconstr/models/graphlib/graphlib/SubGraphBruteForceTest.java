@@ -1,13 +1,10 @@
 package com.bulumutka.polyconstr.models.graphlib.graphlib;
 
 import com.bulumutka.polyconstr.exceptions.GraphParameterException;
-import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
-import com.bulumutka.polyconstr.models.graphlib.graphlib.MetricGraph;
-import com.bulumutka.polyconstr.models.graphlib.graphlib.SubGraphBruteForce;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.TestAbortedException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SubGraphBruteForceTest {
     @Test

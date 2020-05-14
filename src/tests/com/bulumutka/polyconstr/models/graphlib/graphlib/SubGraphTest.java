@@ -1,4 +1,4 @@
-package com.bulumutka.polyconstr.models.graphlib;
+package com.bulumutka.polyconstr.models.graphlib.graphlib;
 
 import com.bulumutka.polyconstr.models.graphlib.graphlib.Algorithms;
 import com.bulumutka.polyconstr.models.graphlib.graphlib.GraphBuilder;
@@ -45,7 +45,7 @@ class SubGraphTest {
         MetricGraph g = builder.build();
         var sg = new SubGraph(g, edge -> edge.time != 0);
 
-        Assertions.assertFalse(Algorithms.isConnected(sg, sg.getStartVertex()));
+        Assertions.assertFalse(Algorithms.isConnected(sg, sg.getRoot()));
     }
 
     @Test
@@ -65,7 +65,7 @@ class SubGraphTest {
         var sg = new SubGraph(g, edge -> edge.time != 0);
 
         assertEquals(6, sg.getVertexNumber());
-        assertTrue(Algorithms.isConnected(sg, sg.getStartVertex()));
+        assertTrue(Algorithms.isConnected(sg, sg.getRoot()));
     }
 
     @Test

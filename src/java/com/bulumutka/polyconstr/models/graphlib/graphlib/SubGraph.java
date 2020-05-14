@@ -47,6 +47,10 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
         if (vertexNumber != -1) {
             return vertexNumber;
         }
+        if (getEdges().isEmpty()) {
+            vertexNumber = 1;
+            return vertexNumber;
+        }
         Set<Integer> set = new HashSet<>();
         for (var edge : getEdges()) {
             set.add(edge.source);

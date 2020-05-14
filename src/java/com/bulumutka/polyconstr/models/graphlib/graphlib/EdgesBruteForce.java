@@ -1,7 +1,5 @@
 package com.bulumutka.polyconstr.models.graphlib.graphlib;
 
-import com.bulumutka.polyconstr.exceptions.GraphParameterException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +11,9 @@ public class EdgesBruteForce {
     private final long maxMask;
     private final Map<Integer, Integer> permutation = new HashMap<>();
 
-    public EdgesBruteForce(SubGraph g, List<GraphEdge> edges) throws GraphParameterException {
+    public EdgesBruteForce(SubGraph g, List<GraphEdge> edges) {
         if (edges.size() > MAX_EDGE_NUMBER) {
-            throw new GraphParameterException("Graph should not has more than 63 edges.");
+            throw new IllegalArgumentException("Graph should not has more than 63 edges.");
         }
         graph = g;
         maxMask = 1L << edges.size();

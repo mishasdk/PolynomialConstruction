@@ -1,14 +1,8 @@
 package com.bulumutka.polyconstr.models.graphlib.graphlib;
 
-import com.bulumutka.polyconstr.exceptions.GraphParameterException;
 import com.bulumutka.polyconstr.models.graphlib.graphlib.base.ForAllVertices;
-import com.sun.javafx.scene.traversal.Algorithm;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.DoubleAccumulator;
+import java.util.*;
 
 /**
  * Class that mapping graph to vector of numbers,
@@ -18,30 +12,45 @@ import java.util.concurrent.atomic.DoubleAccumulator;
 public class CompressedGraph {
     private final MetricGraph graph;
     private List<Double> vector = null;
+    private final List<Double> firstTerm = new ArrayList<>();
+    private final List<Double> secondTerm = new ArrayList<>();
 
     public CompressedGraph(MetricGraph g) {
         graph = g;
     }
 
-    public List<Double> getVector() throws GraphParameterException {
+    public List<Double> getVector() {
         if (vector == null) {
             buildCompression();
         }
+        vector = new ArrayList<>();
+        vector.add(Double.valueOf(graph.getVertexNumber()));
+        vector.add(Double.valueOf(graph.getEdgesNumber()));
+        Collections.reverse(firstTerm);
+        Collections.reverse(secondTerm);
+        vector.addAll(firstTerm);
+        vector.addAll(secondTerm);
+        firstTerm.clear();
+        secondTerm.clear();
         return vector;
     }
 
-    private void buildCompression() throws GraphParameterException {
+    private void buildCompression()  {
         SubGraphBruteForce brute = new SubGraphBruteForce(graph);
         var g = brute.next();
+        int graphNumber = 0;
         while (g != null) {
             if (Algorithms.isConnected(g, g.getRoot())) {
+                ++graphNumber;
                 proceedGraph(g);
+                firstTerm.add(Double.valueOf(g.getEdgesNumber()));
+                secondTerm.add(Double.valueOf(g.getEdgesNumber()));
             }
             g = brute.next();
         }
+        firstTerm.add((double) graphNumber);
+        secondTerm.add((double)graphNumber);
     }
-
-    private Integer sumOfDegree = 0;
 
     private void proceedGraph(SubGraph g) {
         var bridges = Algorithms.findBridges(g, g.getRoot());
@@ -50,30 +59,69 @@ public class CompressedGraph {
             bridgesEnds.add(edge.getSource());
             bridgesEnds.add(edge.getTarget());
         }
+        Set<GraphEdge> reverseEdges = Algorithms.findReverseEdges(g, g.getRoot());
+        vertexNumberTerm2 = 0;
+        Algorithms.depthFirstSearch(g, g.getRoot(), (ForAllVertices<GraphEdge, Integer>) vertex -> {
+            proceedGraphAndVertex(g, vertex, List.copyOf(reverseEdges), bridgesEnds);
+        });
+        firstTerm.add(Double.valueOf(g.getVertexNumber()));
+        secondTerm.add((double) vertexNumberTerm2);
+    }
 
+    private int vertexNumberTerm2 = 0;
+
+    private void proceedGraphAndVertex(SubGraph g, Integer vertex, List<GraphEdge> reverseEdges,
+                                       Set<Integer> bridgesEnds) {
+        // First term.
+        var vertexDegree = g.outgoingEdges(vertex).size();
+        var sub = graph.outgoingEdges(vertex).size() - vertexDegree;
         List<Double> args1 = new ArrayList<>();
         List<Double> args2 = new ArrayList<>();
-        sumOfDegree = 0;
-        Algorithms.depthFirstSearch(g, g.getRoot(), (ForAllVertices<GraphEdge, Integer>) vertex -> {
-            var sub = graph.outgoingEdges(vertex).size() - g.outgoingEdges(vertex).size();
-            sumOfDegree += sub;
-            var marks = Algorithms.findMarks(g, g.getRoot(), vertex);
-            var argument1 = 0.0;
-            for (var edge : marks) {
-                argument1 += edge.time * 2;
-            }
-            args1.add(argument1);
-
-            if (bridgesEnds.contains(vertex)) {
-                var argument2 = 0.0;
-                for (var edge : marks) {
+        if (bridgesEnds.contains(vertex) && vertexDegree > 1) {
+            ++vertexNumberTerm2;
+            // First and second term
+            for (var set : findAllMarksSet(g, reverseEdges, vertex)) {
+                var marksSum1 = 0.0;
+                var marksSum2 = 0.0;
+                for (var markedEdge : set) {
+                    marksSum1 += markedEdge.time * 2;
                     for (var j : g.getEdges()) {
-                        if (edge.id / 2 != j.id / 2) {
-                            argument2 += edge.time - j.time;
+                        if (markedEdge.id / 2 != j.id / 2) {
+                            marksSum2 += markedEdge.time - j.time;
                         }
                     }
+
                 }
+                args1.add(marksSum1);
+                args2.add(marksSum2);
             }
-        });
+            secondTerm.addAll(args2);
+            secondTerm.add((double) args2.size());
+        } else {
+            // Only first term
+            for (var set : findAllMarksSet(g, reverseEdges, vertex)) {
+                var marksSum = 0.0;
+                for (var markedEdge : set) {
+                    marksSum += markedEdge.time * 2;
+                }
+                args1.add(marksSum);
+            }
+        }
+
+        firstTerm.addAll(args1);
+        firstTerm.add((double) args1.size());
+        firstTerm.add((double) sub);
+    }
+
+    private List<Set<GraphEdge>> findAllMarksSet(SubGraph g, List<GraphEdge> edges,
+                                                 Integer targetVertex) {
+        var list = new ArrayList<Set<GraphEdge>>();
+        var bruteForce = new EdgesBruteForce(g, edges);
+        var subGraph = bruteForce.next();
+        while (subGraph != null) {
+            list.add(Algorithms.findMarks(subGraph, subGraph.getRoot(), targetVertex));
+            subGraph = bruteForce.next();
+        }
+        return list;
     }
 }

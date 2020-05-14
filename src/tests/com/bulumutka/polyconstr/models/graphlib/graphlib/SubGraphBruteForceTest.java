@@ -1,8 +1,6 @@
 package com.bulumutka.polyconstr.models.graphlib.graphlib;
 
-import com.bulumutka.polyconstr.exceptions.GraphParameterException;
 import org.junit.jupiter.api.Test;
-import org.opentest4j.TestAbortedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,13 +34,7 @@ class SubGraphBruteForceTest {
         builder.addEdge(0, 1, 0);
         builder.addEdge(1, 2, 0);
         builder.setRoot(0);
-        SubGraphBruteForce b;
-        try {
-            b = new SubGraphBruteForce(builder.build());
-        } catch (GraphParameterException e) {
-            throw new TestAbortedException(e.getMessage());
-        }
-
+        SubGraphBruteForce b = new SubGraphBruteForce(builder.build());
         var subGraph = b.next();
         assertEquals(0, subGraph.getEdgesNumber());
         assertEquals(0, subGraph.outgoingEdges(1).size());
@@ -65,12 +57,7 @@ class SubGraphBruteForceTest {
         builder.addEdge(0, 4, 0);
         builder.setRoot(0);
         var g = builder.build();
-        SubGraphBruteForce b;
-        try {
-            b = new SubGraphBruteForce(g);
-        } catch (GraphParameterException e) {
-            throw new TestAbortedException(e.getMessage());
-        }
+        var b = new SubGraphBruteForce(g);
         var subGraph = b.next();
         while (subGraph != null) {
             System.out.println(subGraph);
@@ -83,12 +70,8 @@ class SubGraphBruteForceTest {
         GraphBuilder builder = new GraphBuilder(2);
         builder.addEdge(0, 1, 0);
         builder.setRoot(0);
-        SubGraphBruteForce b;
-        try {
-            b = new SubGraphBruteForce(builder.build());
-        } catch (GraphParameterException e) {
-            throw new TestAbortedException(e.getMessage());
-        }
+        var b = new SubGraphBruteForce(builder.build());
+
 
         var subGraph = b.next();
         while (subGraph != null) {
@@ -98,12 +81,8 @@ class SubGraphBruteForceTest {
     }
 
     private int bruteTestCase(MetricGraph g) {
-        SubGraphBruteForce brute;
-        try {
-            brute = new SubGraphBruteForce(g);
-        } catch (GraphParameterException e) {
-            throw new TestAbortedException(e.getMessage());
-        }
+        var brute = new SubGraphBruteForce(g);
+
         int count = 0;
         while (brute.next() != null) {
             count++;

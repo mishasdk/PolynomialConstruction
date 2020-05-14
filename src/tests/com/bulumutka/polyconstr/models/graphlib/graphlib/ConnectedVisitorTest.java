@@ -74,4 +74,23 @@ class ConnectedVisitorTest {
             assertTrue(Algorithms.isConnected(builder.build(), i));
         }
     }
+
+    @Test
+    public void connectedTest5() {
+        var builder = new GraphBuilder(3);
+        builder.addEdge(0, 1, 1);
+        builder.addEdge(1, 2, 1);
+        builder.setRoot(0);
+        var b = new SubGraphBruteForce(builder.build());
+        var g = b.next();
+        var count = 0;
+        while (g != null) {
+            if (Algorithms.isConnected(g, g.getRoot())) {
+                System.out.println(g);
+                count++;
+            }
+            g = b.next();
+        }
+        assertEquals(3, count);
+    }
 }

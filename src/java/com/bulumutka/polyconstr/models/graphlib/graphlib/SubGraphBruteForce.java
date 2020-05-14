@@ -1,16 +1,14 @@
 package com.bulumutka.polyconstr.models.graphlib.graphlib;
 
-import com.bulumutka.polyconstr.exceptions.GraphParameterException;
-
 public class SubGraphBruteForce {
     private static final int MAX_EDGE_NUMBER = 63;
     private long mask = -1;
     private final MetricGraph graph;
     private final long maxMask;
 
-    public SubGraphBruteForce(MetricGraph g) throws GraphParameterException {
+    public SubGraphBruteForce(MetricGraph g) {
         if (g.getEdgesNumber() > MAX_EDGE_NUMBER) {
-            throw new GraphParameterException("Graph should not has more than 63 edges.");
+            throw new IllegalArgumentException("Graph should not has more than 63 edges.");
         }
         this.graph = g;
         maxMask = 1L << g.getEdgesNumber();

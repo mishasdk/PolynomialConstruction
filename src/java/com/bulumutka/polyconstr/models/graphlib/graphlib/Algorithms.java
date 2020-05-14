@@ -11,6 +11,12 @@ public class Algorithms {
     private Algorithms() {
     }
 
+    public static <E extends Edge<V>, V> Set<E> findReverseEdges(Graph<E, V> g, V originVertex) {
+        ReverseEdgeVisitor<E, V> visitor = new ReverseEdgeVisitor<E, V>();
+        depthFirstSearch(g, originVertex, visitor);
+        return visitor.getReverseEdges();
+    }
+
     public static <E extends Edge<V>, V> boolean isConnected(Graph<E, V> g, V originVertex) {
         var visitor = new ConnectedVisitor<E, V>(g.getVertexNumber());
         depthFirstSearch(g, originVertex, visitor);

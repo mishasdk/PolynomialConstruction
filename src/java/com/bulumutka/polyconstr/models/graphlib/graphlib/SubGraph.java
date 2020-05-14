@@ -15,6 +15,11 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
     private int edgesNumber = -1;
     private List<GraphEdge> edges = null;
 
+    public SubGraph(MetricGraph otherGraph) {
+        this.otherGraph = otherGraph;
+        this.predicate = edge -> true;
+    }
+
     public SubGraph(MetricGraph otherGraph, Predicate<GraphEdge> predicate) {
         this.otherGraph = otherGraph;
         this.predicate = predicate;
@@ -42,6 +47,10 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
         if (vertexNumber != -1) {
             return vertexNumber;
         }
+        if (getEdges().isEmpty()) {
+            vertexNumber = 1;
+            return vertexNumber;
+        }
         Set<Integer> set = new HashSet<>();
         for (var edge : getEdges()) {
             set.add(edge.source);
@@ -64,6 +73,10 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
         return edgesNumber;
     }
 
+    public SubGraph addFilter(Predicate<GraphEdge> filter) {
+        return new SubGraph(otherGraph, predicate.and(filter));
+    }
+
     public List<GraphEdge> getEdges() {
         if (edges != null) {
             return edges;
@@ -75,9 +88,5 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
             }
         }
         return edges;
-    }
-
-    public Integer getStartVertex() {
-        return otherGraph.getRoot();
     }
 }

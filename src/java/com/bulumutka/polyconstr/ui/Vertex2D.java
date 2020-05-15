@@ -1,6 +1,6 @@
 package com.bulumutka.polyconstr.ui;
 
-import com.bulumutka.polyconstr.models.graphlib.MathHelper;
+import com.bulumutka.polyconstr.models.MathHelper;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 

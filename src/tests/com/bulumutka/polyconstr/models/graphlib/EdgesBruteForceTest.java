@@ -1,13 +1,12 @@
 package com.bulumutka.polyconstr.models.graphlib;
 
-import com.bulumutka.polyconstr.exceptions.GraphParameterException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 class EdgesBruteForceTest {
     @Test
-    public void bruteForceTest1() throws GraphParameterException {
+    public void bruteForceTest1() {
         var builder = new GraphBuilder(12);
         builder.addEdge(0, 1, 0);
         builder.addEdge(0, 2, 0);

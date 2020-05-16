@@ -57,12 +57,12 @@ public class GraphBuilder {
         for (int i = 0; i != edges.size(); ++i) {
             edges.get(i).id = i;
         }
-        ArrayList<ArrayList<Integer>> adjacencyList = new ArrayList<>(vertexNumber);
+        ArrayList<ArrayList<GraphEdge>> adjacencyList = new ArrayList<>(vertexNumber);
         for (var i = 0; i != vertexNumber; ++i) {
             adjacencyList.add(new ArrayList<>());
         }
         for (var edge : edges) {
-            adjacencyList.get(edge.source).add(edge.id);
+            adjacencyList.get(edge.source).add(edges.get(edge.id));
         }
         return new MetricGraph(edges, adjacencyList, root);
     }

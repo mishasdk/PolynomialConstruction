@@ -4,15 +4,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
-class FilterIterable<Value> implements Iterable<Value> {
+class FilteredIterable<Value> implements Iterable<Value> {
     private final List<Value> list;
     private final int maxSize;
     private final Predicate<Value> predicate;
+    private int size = -1;
 
-    public FilterIterable(List<Value> list, Predicate<Value> predicate) {
+    public FilteredIterable(List<Value> list, Predicate<Value> predicate) {
         this.list = list;
         this.maxSize = list.size();
         this.predicate = predicate;
+    }
+
+    public int size() {
+        if (size != -1) {
+            return size;
+        }
+        size = 0;
+        for (var i : list) {
+            if (predicate.test(i)) {
+                ++size;
+            }
+        }
+        return size;
     }
 
     @Override

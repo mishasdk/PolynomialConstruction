@@ -7,10 +7,10 @@ import java.util.List;
 
 public class MetricGraph extends AbstractGraph<GraphEdge, Integer> {
     private final List<GraphEdge> edges;
-    private final ArrayList<ArrayList<Integer>> adjacencyList;
+    private final ArrayList<ArrayList<GraphEdge>> adjacencyList;
     private final int rootVertex;
 
-    public MetricGraph(List<GraphEdge> edges, ArrayList<ArrayList<Integer>> list, int root) {
+    public MetricGraph(List<GraphEdge> edges, ArrayList<ArrayList<GraphEdge>> list, int root) {
         this.edges = edges;
         adjacencyList = list;
         rootVertex = root;
@@ -18,11 +18,7 @@ public class MetricGraph extends AbstractGraph<GraphEdge, Integer> {
 
     @Override
     public List<GraphEdge> outgoingEdges(Integer vertex) {
-        List<GraphEdge> edges = new ArrayList<>();
-        for (var id : adjacencyList.get(vertex)) {
-            edges.add(this.edges.get(id));
-        }
-        return edges;
+        return adjacencyList.get(vertex);
     }
 
     @Override

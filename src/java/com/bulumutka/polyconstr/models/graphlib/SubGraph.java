@@ -31,15 +31,8 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
     }
 
     @Override
-    public List<GraphEdge> outgoingEdges(Integer vertex) {
-        List<GraphEdge> edges = otherGraph.outgoingEdges(vertex);
-        List<GraphEdge> filteredEdges = new ArrayList<>();
-        for (var edge : edges) {
-            if (predicate.test(edge)) {
-                filteredEdges.add(edge);
-            }
-        }
-        return filteredEdges;
+    public FilteredIterable<GraphEdge> outgoingEdges(Integer vertex) {
+        return new FilteredIterable<>(otherGraph.outgoingEdges(vertex), predicate);
     }
 
     @Override

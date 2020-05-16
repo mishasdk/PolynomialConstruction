@@ -65,11 +65,7 @@ public class SubGraph extends AbstractGraph<GraphEdge, Integer> {
         if (edgesNumber != -1) {
             return edgesNumber;
         }
-        edgesNumber = 0;
-        for (var edge : getEdges()) {
-            ++edgesNumber;
-        }
-        edgesNumber /= 2;
+        edgesNumber = getEdges().size() / 2;
         return edgesNumber;
     }
 

@@ -26,8 +26,6 @@ public class CompressedGraph {
         vector = new ArrayList<>();
         vector.add(Double.valueOf(graph.getVertexNumber()));
         vector.add(Double.valueOf(graph.getEdgesNumber()));
-        Collections.reverse(firstTerm);
-        Collections.reverse(secondTerm);
         vector.addAll(firstTerm);
         vector.addAll(secondTerm);
         firstTerm.clear();
@@ -48,23 +46,33 @@ public class CompressedGraph {
         }
         firstTerm.add((double) graphNumber);
         secondTerm.add((double) graphNumber);
+        Collections.reverse(firstTerm);
+        Collections.reverse(secondTerm);
     }
 
+    private int vertexNumberTerm2 = 0;
+
     private void proceedGraph(SubGraph g) {
-        var bridges = Algorithms.findBridges(g, g.getRoot());
-        Set<Integer> bridgesEnds = new HashSet<>();
-        for (var edge : bridges) {
-            bridgesEnds.add(edge.getSource());
-            bridgesEnds.add(edge.getTarget());
+        Map<Integer, GraphEdge> bridgesEnds = new HashMap<>();
+        for (var edge : Algorithms.findBridges(g, g.getRoot())) {
+            bridgesEnds.put(edge.getTarget(), edge);
         }
-        var allEdges = List.copyOf(Algorithms.findEdges(g));
         var reverseEdges = List.copyOf(Algorithms.findReverseEdges(g, g.getRoot()));
+
         vertexNumberTerm2 = 0;
         Algorithms.depthFirstSearch(g, g.getRoot(), (ForAllVertices<GraphEdge, Integer>) vertex -> {
-            proceedGraphAndVertex(g, vertex, reverseEdges, bridgesEnds, allEdges);
+            if (g.outgoingEdges(vertex).size() > 1 && bridgesEnds.containsKey(vertex)) {
+                proceedFirstAndSecondTerm(g, vertex, findAllMarksSet(g, reverseEdges, vertex),
+                        bridgesEnds.get(vertex));
+                ++vertexNumberTerm2;
+            } else {
+                proceedFirstTerm(g, vertex, findAllMarksSet(g, reverseEdges, vertex));
+            }
         });
+
         firstTerm.add(Double.valueOf(g.getVertexNumber()));
         secondTerm.add((double) vertexNumberTerm2);
+        var allEdges = Algorithms.findEdges(g);
         List<Double> weights = new ArrayList<>();
         for (var edge : allEdges) {
             weights.add(edge.time);
@@ -75,47 +83,39 @@ public class CompressedGraph {
         secondTerm.add((double) allEdges.size());
     }
 
-    private int vertexNumberTerm2 = 0;
-
-    private void proceedGraphAndVertex(SubGraph g, Integer vertex, List<GraphEdge> reverseEdges,
-                                       Set<Integer> bridgesEnds, List<GraphEdge> allEdges) {
-        // First term.
-        var vertexDegree = g.outgoingEdges(vertex).size();
-        var sub = graph.outgoingEdges(vertex).size() - vertexDegree;
-        List<Double> args1 = new ArrayList<>();
-        List<Double> args2 = new ArrayList<>();
-        if (bridgesEnds.contains(vertex) && vertexDegree > 1) {
-            ++vertexNumberTerm2;
-            // First and second term
-            for (var set : findAllMarksSet(g, reverseEdges, vertex)) {
-                var marksSum1 = 0.0;
-                var marksSum2 = 0.0;
-                for (var markedEdge : set) {
-                    marksSum1 += markedEdge.time;
-                    for (var j : allEdges) {
-                        if (j.id != markedEdge.id) {
-                            marksSum2 += markedEdge.time - j.time;
-                        }
-                    }
-                }
-                args1.add(marksSum1);
-                args2.add(marksSum2);
+    private void proceedFirstTerm(SubGraph g, Integer vertex, List<Set<GraphEdge>> allMarks) {
+        // Only first term
+        var sub = graph.outgoingEdges(vertex).size() - g.outgoingEdges(vertex).size();
+        for (var set : allMarks) {
+            var marksSum = 0.0;
+            for (var markedEdge : set) {
+                marksSum += markedEdge.time;
             }
-            secondTerm.addAll(args2);
-            secondTerm.add((double) args2.size());
-        } else {
-            // Only first term
-            for (var set : findAllMarksSet(g, reverseEdges, vertex)) {
-                var marksSum = 0.0;
-                for (var markedEdge : set) {
-                    marksSum += markedEdge.time;
-                }
-                args1.add(marksSum);
-            }
+            firstTerm.add(marksSum);
         }
+        firstTerm.add((double) allMarks.size());
+        firstTerm.add((double) sub);
+    }
 
-        firstTerm.addAll(args1);
-        firstTerm.add((double) args1.size());
+    private void proceedFirstAndSecondTerm(SubGraph g, Integer vertex,
+                                           List<Set<GraphEdge>> allMarks, GraphEdge edge) {
+        var sub = graph.outgoingEdges(vertex).size() - g.outgoingEdges(vertex).size();
+        // First and second term
+        for (var set : allMarks) {
+            var marksSum1 = 0.0;
+            var marksSum2 = 0.0;
+            for (var markedEdge : set) {
+                marksSum1 += markedEdge.time;
+                if (markedEdge.id != edge.id) {
+                    marksSum2 += markedEdge.time - edge.time;
+                }
+            }
+            firstTerm.add(marksSum1);
+            secondTerm.add(marksSum2);
+        }
+        secondTerm.add((double) allMarks.size());
+        secondTerm.add(edge.time);
+        firstTerm.add((double) allMarks.size());
         firstTerm.add((double) sub);
     }
 

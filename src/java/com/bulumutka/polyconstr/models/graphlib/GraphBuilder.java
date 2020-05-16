@@ -17,7 +17,6 @@ public class GraphBuilder {
     }
 
     public void addEdge(int source, int target, double time) {
-        System.out.println("Graph builder: " + "add edge " + source + " " + target + " " + time);
         edges.add(new GraphEdge(currentEdgeId++, source, target, time));
         edges.add(new GraphEdge(currentEdgeId++, target, source, time));
     }
@@ -29,7 +28,6 @@ public class GraphBuilder {
     }
 
     public void addVertex() {
-        System.out.println("Graph builder: " + "add vertex " + vertexNumber);
         vertexNumber++;
     }
 

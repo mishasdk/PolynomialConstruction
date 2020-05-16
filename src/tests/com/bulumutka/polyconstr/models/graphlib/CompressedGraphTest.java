@@ -2,6 +2,11 @@ package com.bulumutka.polyconstr.models.graphlib;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
 class CompressedGraphTest {
     @Test
     public void getVectorTest1() {
@@ -34,12 +39,67 @@ class CompressedGraphTest {
         System.out.println(cg.getVector());
     }
 
+    @Test
+    public void generateCompressedTest1() {
+        var c = new CompressedGraph(generateDenseGraph(3));
+        var v = c.getVector();
+        writeVector(v, "data/" + "K3_graph_vector.txt");
+
+        c = new CompressedGraph(generateDenseGraph(4));
+        v = c.getVector();
+        writeVector(v, "data/" + "K4_graph_vector.txt");
+
+//        c = new CompressedGraph(generateDenseGraph(5));
+//        v = c.getVector();
+//        writeVector(v, "data/" + "K5_graph_vector.txt");
+    }
+
+    @Test
+    public void generateCyclicTest1() {
+        var c = new CompressedGraph(generateCycle(3));
+        var v = c.getVector();
+        writeVector(v, "data/" + "cycle_3_vector.txt");
+
+        c = new CompressedGraph(generateCycle(4));
+        v = c.getVector();
+        writeVector(v, "data/" + "cycle_4_vector.txt");
+
+        c = new CompressedGraph(generateCycle(5));
+        v = c.getVector();
+        writeVector(v, "data/" + "cycle_5_vector.txt");
+
+        c = new CompressedGraph(generateCycle(6));
+        v = c.getVector();
+        writeVector(v, "data/" + "cycle_6_vector.txt");
+    }
+
+    private static void writeVector(List<Double> vector, String filePath) {
+        try {
+            var writer = new BufferedWriter(new FileWriter(filePath));
+            for (int i = 0; i < vector.size(); ++i) {
+                writer.write(String.valueOf(vector.get(i)));
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException exception) {
+        }
+    }
+
     private static MetricGraph generateDenseGraph(int size) {
         var builder = new GraphBuilder(size);
         for (int i = 0; i != size; ++i) {
             for (int j = i + 1; j != size; ++j) {
-                builder.addEdge(i, j, 0);
+                builder.addEdge(i, j, 1);
             }
+        }
+        builder.setRoot(0);
+        return builder.build();
+    }
+
+    private static MetricGraph generateCycle(int size) {
+        var builder = new GraphBuilder(size);
+        for (int i = 0; i < size; ++i) {
+            builder.addEdge(i, (i + 1) % size, 1);
         }
         builder.setRoot(0);
         return builder.build();

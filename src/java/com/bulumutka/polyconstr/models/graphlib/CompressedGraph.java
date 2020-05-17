@@ -30,6 +30,7 @@ public class CompressedGraph {
         vector.addAll(secondTerm);
         firstTerm.clear();
         secondTerm.clear();
+        System.out.println("Vector built");
         return vector;
     }
 

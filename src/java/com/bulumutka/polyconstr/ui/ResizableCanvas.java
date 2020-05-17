@@ -47,7 +47,7 @@ public class ResizableCanvas extends Canvas {
         double height = getHeight();
 
         GraphicsContext gc = getGraphicsContext2D();
-        gc.setFill(Color.WHITE);
+        gc.setFill(Color.web("#fffff6"));
         gc.fillRect(0, 0, width, height);
     }
 }

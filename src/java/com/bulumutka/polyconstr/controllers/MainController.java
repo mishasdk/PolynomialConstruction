@@ -1,15 +1,26 @@
 package com.bulumutka.polyconstr.controllers;
 
-import com.bulumutka.polyconstr.models.EditMode;
-import com.bulumutka.polyconstr.models.GraphEditor;
+import com.bulumutka.polyconstr.models.*;
+import com.bulumutka.polyconstr.models.graphlib.CompressedGraph;
+import com.bulumutka.polyconstr.ui.DialogWindow;
 import com.bulumutka.polyconstr.ui.GraphCanvas;
+import com.sun.javafx.fxml.builder.JavaFXSceneBuilder;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.ResponseCache;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 public class MainController implements Initializable {
     public StackPane drawArea;
@@ -18,8 +29,8 @@ public class MainController implements Initializable {
     public Button vertexButton;
     public Button edgeButton;
     public Button startVertexButton;
-    public Button removeButton;
     public Button clearButton;
+    public Button countButton;
     private GraphEditor editor;
 
     @Override
@@ -36,18 +47,42 @@ public class MainController implements Initializable {
             editor.setEditMode(EditMode.ADD_EDGE);
         });
 
-        removeButton.setOnAction(event -> {
-            System.out.println("Remove button clicked.");
-            editor.setEditMode(EditMode.REMOVE);
-        });
-
-        clearButton.setOnAction(event -> {
-            editor.reset();
-        });
+        clearButton.setOnAction(event -> editor.reset());
 
         startVertexButton.setOnAction(event -> {
             System.out.println("Start button clicked.");
             editor.setEditMode(EditMode.START_VERTEX);
         });
+
+        countButton.setOnAction(event -> {
+            if (!editor.hasGraph()) {
+                DialogWindow.errorDialog("Draw your graph first");
+            } else if (!editor.hasStartVertex()) {
+                DialogWindow.errorDialog("Choose start vertex");
+            } else {
+                var graph = editor.getGraph();
+                var c = new CompressedGraph(graph);
+                var vector = c.getVector();
+                SafeWriter.writeVector(vector, "data.txt");
+                Repository.formulas = PythonScript
+                        .start("out/production/PolynomialConstruction/com/bulumutka/polyconstr" +
+                                "/get_formulas.py");
+                showCountResult();
+            }
+        });
+    }
+
+    private void showCountResult() {
+        try {
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getClassLoader().getResource("views" + "/ShowResultView.fxml")));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(parent));
+            stage.centerOnScreen();
+            stage.setTitle("Function's formulas");
+            stage.show();
+        } catch (IOException ex) {
+            throw new RuntimeException("No resources found " + ex.getMessage());
+        }
     }
 }

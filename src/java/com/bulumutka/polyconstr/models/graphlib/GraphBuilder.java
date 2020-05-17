@@ -70,6 +70,7 @@ public class GraphBuilder {
     public void reset() {
         currentEdgeId = 0;
         vertexNumber = 0;
+        root = 0;
         edges.clear();
     }
 }

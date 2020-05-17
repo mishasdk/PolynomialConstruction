@@ -1,6 +1,7 @@
 package com.bulumutka.polyconstr.models;
 
 import com.bulumutka.polyconstr.models.graphlib.GraphBuilder;
+import com.bulumutka.polyconstr.models.graphlib.MetricGraph;
 import com.bulumutka.polyconstr.ui.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -16,10 +17,16 @@ public class GraphEditor {
     private final Stack<Vertex2D<Integer>> stack = new Stack<>();
     private EditMode mode = EditMode.NONE;
     private int vertexNumber = 0;
+    private boolean isEmpty = true;
+    private boolean hasStartVertex;
 
     public void setEditMode(EditMode mode) {
         System.out.println("setEditMode: " + mode);
         this.mode = mode;
+    }
+
+    public boolean hasStartVertex() {
+        return hasStartVertex;
     }
 
     public GraphEditor(GraphCanvas canvas) {
@@ -34,10 +41,8 @@ public class GraphEditor {
                 case ADD_VERTEX:
                     addVertex(event.getX(), event.getY());
                     break;
-                case REMOVE:
-                    removeComponent(event.getX(), event.getY());
-                    break;
                 case START_VERTEX:
+                    hasStartVertex = true;
                     var vertex = getVertex(event.getX(), event.getY());
                     if (vertex != null) {
                         builder.setRoot(vertex.getVertex());
@@ -63,21 +68,25 @@ public class GraphEditor {
     }
 
     public void reset() {
+        hasStartVertex = false;
+        isEmpty = true;
         builder.reset();
         mode = EditMode.NONE;
         components.clear();
     }
 
-    private void removeComponent(double x, double y) {
-        components.removeIf(comp -> comp.contains(x, y));
+    public boolean hasGraph() {
+        return !isEmpty;
     }
 
     private void addVertex(double x, double y) {
+        isEmpty = false;
         builder.addVertex();
         components.add(new Vertex2D<>(vertexNumber++, x, y));
     }
 
     private void addEdge(double x, double y) {
+        isEmpty = false;
         Vertex2D<Integer> vertex = getVertex(x, y);
         if (vertex == null) {
             return;
@@ -99,5 +108,9 @@ public class GraphEditor {
             return null;
         }
         return (Vertex2D<Integer>) element.get(0);
+    }
+
+    public MetricGraph getGraph() {
+        return builder.build();
     }
 }

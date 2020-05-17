@@ -2,6 +2,7 @@ package com.bulumutka.polyconstr.ui;
 
 import com.bulumutka.polyconstr.models.MathHelper;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.paint.Color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +25,11 @@ public class Edge2D<Vertex extends Vertex2D> implements Drawable {
         double x2 = target.getX();
         double y2 = target.getY();
         var g = canvas.getGraphicsContext2D();
+        g.setFill(Color.BLACK);
+        g.setStroke(Color.BLACK);
         g.strokeLine(x1, y1, x2, y2);
-        g.fillText(Double.toString(time), (x1 + x2) / 2, (y1 + y2) / 2);
+        g.strokeLine(x1, y1, x2, y2);
+        g.fillText(Double.toString(time), (x1 + x2) / 2 + 10, (y1 + y2) / 2 + 10);
     }
 
     @Override

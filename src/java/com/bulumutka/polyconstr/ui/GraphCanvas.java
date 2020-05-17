@@ -16,5 +16,10 @@ public class GraphCanvas extends ResizableCanvas {
         for (var component : components) {
             component.draw(this);
         }
+        for (var component : components) {
+            if (component instanceof Vertex2D) {
+                component.draw(this);
+            }
+        }
     }
 }

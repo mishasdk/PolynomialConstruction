@@ -51,27 +51,11 @@ def find_polynomial(vector):
     return first_term + second_term
 
 
-def find_k_graph(n, t):
-    m = int(n * (n - 1) / 2)
-    n = int(n)
-    T = sp.symbols('T')
-    expr = T ** (m - 1) / (2 ** (n - 2) * sp.factorial(m - 1)) * sum(t) / np.prod(t)
-    expr += double_sum(t) / np.prod(t) * T ** (n - 2) / 2 ** (n - 2) / sp.factorial(n - 2)
-    return sp.expand(expr)
-
-
 def bernoulli_barns(S, t):
     T = sp.symbols('T')
     k = len(t)
     expr = 1 / (np.prod(t))
     expr *= (T + S) ** k / sp.factorial(k) + 0.5 * sum(t) * (T + S) ** (k - 1) / sp.factorial(k - 1)
-    return sp.expand(expr)
-
-
-def find_cycle_graph(n, t):
-    T = sp.symbols('T')
-    expr = T ** (n - 1) * sum(t) / (2 ** (n - 2)) / sp.factorial(n - 1) / np.prod(t)
-    expr += double_sum(t) * T ** (n - 2) / 2 ** (n - 2) / sp.factorial(n - 2) / np.prod(t)
     return sp.expand(expr)
 
 
@@ -87,14 +71,10 @@ def unpack_vector(pathname):
     return find_polynomial(read_vector(pathname))
 
 
-def calculate_polynomial(expression, x):
-    T = sp.sybols('T')
-    return expression.subs(T, x)
-
-
 def read_vector(pathname):
     vector = []
     with open(pathname, 'r') as reader:
         vector = [float(line) for line in reader]
-
     return vector
+
+print(unpack_vector('data.txt'))

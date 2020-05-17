@@ -1,7 +1,9 @@
 .vertex-button {
     -fx-padding: 5;
+    -fx-font-size: 16;
 }
 
 .edge-button {
     -fx-padding: 5;
+    -fx-font-size: 16;
 }

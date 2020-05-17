@@ -40,9 +40,11 @@ public class Vertex2D<Vertex> implements Drawable {
         double y = getY();
         var g = canvas.getGraphicsContext2D();
         g.setStroke(Color.BLACK);
+        g.setFill(Color.WHITE);
         if (start) {
             g.setStroke(Color.BLUE);
         }
+        g.fillOval(centerX(), centerY(), 2 * VERTEX_RADIUS, 2 * VERTEX_RADIUS);
         g.strokeOval(centerX(), centerY(), 2 * VERTEX_RADIUS, 2 * VERTEX_RADIUS);
     }
 

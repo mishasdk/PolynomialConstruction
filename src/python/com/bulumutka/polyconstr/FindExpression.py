@@ -53,7 +53,6 @@ def find_polynomial(vector):
 def find_k_graph(n, t):
     m = int(n * (n - 1) / 2)
     n = int(n)
-    print('size = ', m, n)
     T = sp.symbols('T')
     expr = T ** (m - 1) / (2 ** (n - 2) * sp.factorial(m - 1)) * sum(t) / np.prod(t)
     expr += double_sum(t) / np.prod(t) * T ** (n - 2) / 2 ** (n - 2) / sp.factorial(n - 2)
@@ -65,13 +64,12 @@ def bernoulli_barns(S, t):
     k = len(t)
     expr = 1 / (np.prod(t))
     expr *= (T + S) ** k / sp.factorial(k) + 0.5 * sum(t) * (T + S) ** (k - 1) / sp.factorial(k - 1)
-    print(expr)
     return sp.expand(expr)
 
 
 def find_cycle_graph(n, t):
     T = sp.symbols('T')
-    expr = T ** (n - 1) * sum(t) / 2 ** (n - 2) / sp.factorial(n - 1) / np.prod(t)
+    expr = T ** (n - 1) * sum(t) / (2 ** (n - 2)) / sp.factorial(n - 1) / np.prod(t)
     expr += double_sum(t) * T ** (n - 2) / 2 ** (n - 2) / sp.factorial(n - 2) / np.prod(t)
     return sp.expand(expr)
 

@@ -1,5 +1,6 @@
 package com.bulumutka.polyconstr.models.graphlib;
 
+import com.sun.javafx.scene.traversal.Algorithm;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -76,6 +77,18 @@ class SubGraphBruteForceTest {
         var subGraph = b.next();
         while (subGraph != null) {
             System.out.println(subGraph);
+            subGraph = b.next();
+        }
+    }
+
+    @Test
+    public void showSubGraphsTest4() {
+        var b = new SubGraphBruteForce(TestHelper.generateCycle(10));
+        var subGraph = b.next();
+        while (subGraph != null) {
+            if (Algorithms.isConnected(subGraph, subGraph.getRoot())) {
+                System.out.println(subGraph);
+            }
             subGraph = b.next();
         }
     }

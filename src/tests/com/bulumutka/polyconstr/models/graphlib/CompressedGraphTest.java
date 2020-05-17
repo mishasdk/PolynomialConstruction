@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import static com.bulumutka.polyconstr.models.graphlib.TestHelper.generateCycle;
+
 class CompressedGraphTest {
     @Test
     public void getVectorTest1() {
@@ -49,9 +51,13 @@ class CompressedGraphTest {
         v = c.getVector();
         writeVector(v, "data/" + "K4_graph_vector.txt");
 
-//        c = new CompressedGraph(generateDenseGraph(5));
-//        v = c.getVector();
-//        writeVector(v, "data/" + "K5_graph_vector.txt");
+        c = new CompressedGraph(generateDenseGraph(5));
+        v = c.getVector();
+        writeVector(v, "data/" + "K5_graph_vector.txt");
+
+        c = new CompressedGraph(generateDenseGraph(6));
+        v = c.getVector();
+        writeVector(v, "data/" + "K6_graph_vector.txt");
     }
 
     @Test
@@ -71,6 +77,22 @@ class CompressedGraphTest {
         c = new CompressedGraph(generateCycle(6));
         v = c.getVector();
         writeVector(v, "data/" + "cycle_6_vector.txt");
+
+        c = new CompressedGraph(generateCycle(7));
+        v = c.getVector();
+        writeVector(v, "data/" + "cycle_7_vector.txt");
+
+        c = new CompressedGraph(generateCycle(8));
+        v = c.getVector();
+        writeVector(v, "data/" + "cycle_8_vector.txt");
+
+        c = new CompressedGraph(generateCycle(10));
+        v = c.getVector();
+        writeVector(v, "data/" + "cycle_10_vector.txt");
+
+        c = new CompressedGraph(generateCycle(16));
+        v = c.getVector();
+        writeVector(v, "data/" + "cycle_16_vector.txt");
     }
 
     private static void writeVector(List<Double> vector, String filePath) {
@@ -91,15 +113,6 @@ class CompressedGraphTest {
             for (int j = i + 1; j != size; ++j) {
                 builder.addEdge(i, j, 1);
             }
-        }
-        builder.setRoot(0);
-        return builder.build();
-    }
-
-    private static MetricGraph generateCycle(int size) {
-        var builder = new GraphBuilder(size);
-        for (int i = 0; i < size; ++i) {
-            builder.addEdge(i, (i + 1) % size, 1);
         }
         builder.setRoot(0);
         return builder.build();

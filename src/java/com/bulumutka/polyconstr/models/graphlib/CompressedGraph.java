@@ -73,12 +73,10 @@ public class CompressedGraph {
         firstTerm.add(Double.valueOf(g.getVertexNumber()));
         secondTerm.add((double) vertexNumberTerm2);
         var allEdges = Algorithms.findEdges(g);
-        List<Double> weights = new ArrayList<>();
         for (var edge : allEdges) {
-            weights.add(edge.time);
+            firstTerm.add(edge.time);
+            secondTerm.add(edge.time);
         }
-        firstTerm.addAll(weights);
-        secondTerm.addAll(weights);
         firstTerm.add((double) allEdges.size());
         secondTerm.add((double) allEdges.size());
     }

@@ -14,4 +14,13 @@ public class TestHelper {
         builder.setRoot(0);
         return builder.build();
     }
+
+    public static MetricGraph generateCycle(int size) {
+        var builder = new GraphBuilder(size);
+        for (int i = 0; i < size; ++i) {
+            builder.addEdge(i, (i + 1) % size, 1);
+        }
+        builder.setRoot(0);
+        return builder.build();
+    }
 }

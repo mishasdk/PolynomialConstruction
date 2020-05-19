@@ -2,6 +2,7 @@ package com.bulumutka.polyconstr.controllers;
 
 import com.bulumutka.polyconstr.models.*;
 import com.bulumutka.polyconstr.models.graphlib.CompressedGraph;
+import com.bulumutka.polyconstr.models.graphlib.MetricGraph;
 import com.bulumutka.polyconstr.ui.DialogWindow;
 import com.bulumutka.polyconstr.ui.GraphCanvas;
 import com.sun.javafx.fxml.builder.JavaFXSceneBuilder;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -60,16 +62,23 @@ public class MainController implements Initializable {
             } else if (!editor.hasStartVertex()) {
                 DialogWindow.errorDialog("Choose start vertex");
             } else {
-                var graph = editor.getGraph();
-                var c = new CompressedGraph(graph);
-                var vector = c.getVector();
-                SafeWriter.writeVector(vector, "data.txt");
-                Repository.formulas = PythonScript
-                        .start("out/production/PolynomialConstruction/com/bulumutka/polyconstr" +
-                                "/get_formulas.py");
-                showCountResult();
+                try {
+                    startCalculations(editor.getGraph());
+                } catch (Exception ex) {
+                    DialogWindow.errorDialog(ex.getMessage());
+                }
             }
         });
+    }
+
+    private void startCalculations(MetricGraph graph) {
+        var c = new CompressedGraph(graph);
+        var vector = c.getVector();
+        SafeWriter.writeVector(vector, "data.txt");
+        Repository.formulas = PythonScript
+                .start("out/production/PolynomialConstruction/com/bulumutka/polyconstr" +
+                        "/get_formulas.py");
+        showCountResult();
     }
 
     private void showCountResult() {

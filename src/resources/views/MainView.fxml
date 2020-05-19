@@ -24,16 +24,32 @@
             <HBox alignment="CENTER" spacing="10">
                 <Button fx:id="vertexButton"
                         styleClass="vertex-button"
-                        text="Vertex"/>
+                        text="Vertex">
+                    <tooltip>
+                        <Tooltip text="Add vertex to graph"/>
+                    </tooltip>
+                </Button>
                 <Button fx:id="edgeButton"
                         styleClass="edge-button"
-                        text="Edge"/>
+                        text="Edge">
+                    <tooltip>
+                        <Tooltip text="Add edge to graph"/>
+                    </tooltip>
+                </Button>
                 <Button fx:id="startVertexButton"
                         style="-fx-font-size: 16; -fx-padding: 5"
-                        text="Start"/>
+                        text="Start">
+                    <tooltip>
+                        <Tooltip text="Choose start vertex"/>
+                    </tooltip>
+                </Button>
                 <Button fx:id="clearButton"
                         style="-fx-font-size: 16; -fx-padding: 5"
-                        text="Clear"/>
+                        text="Clear">
+                    <tooltip>
+                        <Tooltip text="Clear graph"/>
+                    </tooltip>
+                </Button>
             </HBox>
         </center>
 
@@ -41,7 +57,11 @@
             <HBox alignment="CENTER" prefWidth="100">
                 <Button alignment="CENTER" fx:id="countButton"
                         style="-fx-padding: 5; -fx-font-size: 16"
-                        text="Count"/>
+                        text="Count">
+                    <tooltip>
+                        <Tooltip text="Calculate polynomial for graph"/>
+                    </tooltip>
+                </Button>
             </HBox>
         </right>
     </BorderPane>

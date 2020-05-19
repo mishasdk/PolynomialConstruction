@@ -17,9 +17,12 @@ public class DialogWindow {
         }
         try {
             Double weight = Double.parseDouble(result.get());
+            if (weight <= 0) {
+                throw new NumberFormatException();
+            }
             return Optional.of(weight);
         } catch (NumberFormatException ex) {
-            errorDialog("Wrong edge weight parameter. It should be real number.");
+            errorDialog("Wrong edge weight parameter. It should be real number > 0.");
         }
         return Optional.empty();
     }

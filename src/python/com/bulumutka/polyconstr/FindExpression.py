@@ -52,11 +52,11 @@ def find_polynomial(vector):
 
 
 def find_k_graph(n, t):
-    m = int(n * (n - 1) / 2)
     n = int(n)
+    m = len(t)
     T = sp.symbols('T')
-    expr = T ** (m - 1) / (2 ** (n - 2) * sp.factorial(m - 1)) * sum(t) / np.prod(t)
-    expr += double_sum(t) / np.prod(t) * T ** (n - 2) / 2 ** (n - 2) / sp.factorial(n - 2)
+    expr = T ** (m - 1) * sum(t) / 2 ** (n - 2) / sp.factorial(m - 1) / np.prod(t)
+    expr += T ** (m - 2) * double_sum(t) / 2 ** (n - 2) / sp.factorial(m - 2) / np.prod(t)
     return sp.expand(expr)
 
 

@@ -105,7 +105,7 @@ public class CompressedGraph {
             var marksSum2 = 0.0;
             for (var markedEdge : set) {
                 marksSum1 += markedEdge.time;
-                if (markedEdge.id != edge.id) {
+                if (markedEdge.id / 2 != edge.id / 2) {
                     marksSum2 += markedEdge.time - edge.time;
                 }
             }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.bulumutka.polyconstr.models.graphlib.TestHelper.generateCycle;
+import static com.bulumutka.polyconstr.models.graphlib.TestHelper.generateDenseGraph;
 
 class CompressedGraphTest {
     @Test
@@ -46,18 +47,17 @@ class CompressedGraphTest {
         var c = new CompressedGraph(generateDenseGraph(3));
         var v = c.getVector();
         writeVector(v, "data/" + "K3_graph_vector.txt");
-
         c = new CompressedGraph(generateDenseGraph(4));
         v = c.getVector();
         writeVector(v, "data/" + "K4_graph_vector.txt");
 
-        c = new CompressedGraph(generateDenseGraph(5));
-        v = c.getVector();
-        writeVector(v, "data/" + "K5_graph_vector.txt");
-
-        c = new CompressedGraph(generateDenseGraph(6));
-        v = c.getVector();
-        writeVector(v, "data/" + "K6_graph_vector.txt");
+        //        c = new CompressedGraph(generateDenseGraph(5));
+        //        v = c.getVector();
+        //        writeVector(v, "data/" + "K5_graph_vector.txt");
+        //
+        //        c = new CompressedGraph(generateDenseGraph(6));
+        //        v = c.getVector();
+        //        writeVector(v, "data/" + "K6_graph_vector.txt");
     }
 
     @Test
@@ -105,16 +105,5 @@ class CompressedGraphTest {
             writer.close();
         } catch (IOException exception) {
         }
-    }
-
-    private static MetricGraph generateDenseGraph(int size) {
-        var builder = new GraphBuilder(size);
-        for (int i = 0; i != size; ++i) {
-            for (int j = i + 1; j != size; ++j) {
-                builder.addEdge(i, j, 1);
-            }
-        }
-        builder.setRoot(0);
-        return builder.build();
     }
 }

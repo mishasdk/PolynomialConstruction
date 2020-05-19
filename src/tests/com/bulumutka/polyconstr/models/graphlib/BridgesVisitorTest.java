@@ -1,5 +1,6 @@
 package com.bulumutka.polyconstr.models.graphlib;
 
+import com.sun.javafx.scene.traversal.Algorithm;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,6 +48,20 @@ class BridgesVisitorTest {
         assertEquals(45, g.getEdgesNumber());
         b = Algorithms.findBridges(g, 0);
         assertEquals(0, b.size());
+    }
+
+    @Test
+    public void bridgesTest4() {
+        var builder = new GraphBuilder(3);
+        builder.addEdge(0, 1, 1.414);
+        builder.addEdge(1, 2, 2.236);
+        builder.setRoot(0);
+        var g = builder.build();
+        var b = Algorithms.findBridges(g, 0);
+        assertEquals(2, b.size());
+        for (var e : b) {
+            System.out.println(e);
+        }
     }
 
     private static MetricGraph generateDenseGraph(int size) {

@@ -23,8 +23,9 @@ public class TestHelper {
 
     public static MetricGraph generateCycle(int size) {
         var builder = new GraphBuilder(size);
+        var sample = getIndependentSample(size);
         for (int i = 0; i < size; ++i) {
-            builder.addEdge(i, (i + 1) % size, 1);
+            builder.addEdge(i, (i + 1) % size, sample.get(i));
         }
         builder.setRoot(0);
         return builder.build();

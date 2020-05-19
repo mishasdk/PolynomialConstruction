@@ -55,7 +55,7 @@ def bernoulli_barns(S, t):
     T = sp.symbols('T')
     k = len(t)
     expr = 1 / (np.prod(t))
-    expr *= (T + S) ** k / sp.factorial(k) + 0.5 * sum(t) * (T + S) ** (k - 1) / sp.factorial(k - 1)
+    expr *= (T + S) ** k / sp.factorial(k) - 0.5 * sum(t) * (T + S) ** (k - 1) / sp.factorial(k - 1)
     return sp.expand(expr)
 
 
@@ -76,5 +76,6 @@ def read_vector(pathname):
     with open(pathname, 'r') as reader:
         vector = [float(line) for line in reader]
     return vector
+
 
 print(unpack_vector('data.txt'))

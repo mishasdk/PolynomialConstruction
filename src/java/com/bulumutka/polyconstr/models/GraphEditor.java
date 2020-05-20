@@ -97,7 +97,7 @@ public class GraphEditor {
         if (stack.size() == 2) {
             var source = stack.pop();
             var target = stack.pop();
-            DialogWindow.edgeWeightDialog().ifPresent(time -> {
+            DialogWindow.edgeWeightSymbDialog().ifPresent(time -> {
                 components.add(new Edge2D<>(source, target, time));
                 builder.addEdge(source.getVertex(), target.getVertex(), time);
             });

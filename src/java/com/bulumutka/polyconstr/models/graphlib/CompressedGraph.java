@@ -11,21 +11,21 @@ import java.util.*;
  */
 public class CompressedGraph {
     private final MetricGraph graph;
-    private List<Double> vector = null;
-    private final List<Double> firstTerm = new ArrayList<>();
-    private final List<Double> secondTerm = new ArrayList<>();
+    private List<Object> vector = null;
+    private final List<Object> firstTerm = new ArrayList<>();
+    private final List<Object> secondTerm = new ArrayList<>();
 
     public CompressedGraph(MetricGraph g) {
         graph = g;
     }
 
-    public List<Double> getVector() {
+    public List<Object> getVector() {
         if (vector == null) {
             buildCompression();
         }
         vector = new ArrayList<>();
-        vector.add(Double.valueOf(graph.getVertexNumber()));
-        vector.add(Double.valueOf(graph.getEdgesNumber()));
+        vector.add(graph.getVertexNumber());
+        vector.add(graph.getEdgesNumber());
         vector.addAll(firstTerm);
         vector.addAll(secondTerm);
         firstTerm.clear();
@@ -45,8 +45,8 @@ public class CompressedGraph {
             }
             g = brute.next();
         }
-        firstTerm.add((double) graphNumber);
-        secondTerm.add((double) graphNumber);
+        firstTerm.add(graphNumber);
+        secondTerm.add(graphNumber);
         Collections.reverse(firstTerm);
         Collections.reverse(secondTerm);
     }
@@ -71,29 +71,28 @@ public class CompressedGraph {
             }
         });
 
-        firstTerm.add(Double.valueOf(g.getVertexNumber()));
-        secondTerm.add((double) vertexNumberTerm2);
+        firstTerm.add(g.getVertexNumber());
+        secondTerm.add(vertexNumberTerm2);
         var allEdges = Algorithms.findEdges(g);
         for (var edge : allEdges) {
             firstTerm.add(edge.time);
             secondTerm.add(edge.time);
         }
-        firstTerm.add((double) allEdges.size());
-        secondTerm.add((double) allEdges.size());
+        firstTerm.add(allEdges.size());
+        secondTerm.add(allEdges.size());
     }
 
     private void proceedFirstTerm(SubGraph g, Integer vertex, List<Set<GraphEdge>> allMarks) {
         // Only first term
         var sub = graph.outgoingEdges(vertex).size() - g.outgoingEdges(vertex).size();
         for (var set : allMarks) {
-            var marksSum = 0.0;
             for (var markedEdge : set) {
-                marksSum += markedEdge.time;
+                firstTerm.add(markedEdge.time);
             }
-            firstTerm.add(marksSum);
+            firstTerm.add(set.size());
         }
-        firstTerm.add((double) allMarks.size());
-        firstTerm.add((double) sub);
+        firstTerm.add(allMarks.size());
+        firstTerm.add(sub);
     }
 
     private void proceedFirstAndSecondTerm(SubGraph g, Integer vertex,
@@ -101,21 +100,21 @@ public class CompressedGraph {
         var sub = graph.outgoingEdges(vertex).size() - g.outgoingEdges(vertex).size();
         // First and second term
         for (var set : allMarks) {
-            var marksSum1 = 0.0;
-            var marksSum2 = 0.0;
+            int count = 0;
             for (var markedEdge : set) {
-                marksSum1 += markedEdge.time;
                 if (markedEdge.id / 2 != edge.id / 2) {
-                    marksSum2 += markedEdge.time - edge.time;
+                    ++count;
+                    secondTerm.add(markedEdge.time);
                 }
+                firstTerm.add(markedEdge.time);
             }
-            firstTerm.add(marksSum1);
-            secondTerm.add(marksSum2);
+            firstTerm.add(set.size());
+            secondTerm.add(count);
         }
-        secondTerm.add((double) allMarks.size());
+        secondTerm.add(allMarks.size());
         secondTerm.add(edge.time);
-        firstTerm.add((double) allMarks.size());
-        firstTerm.add((double) sub);
+        firstTerm.add(allMarks.size());
+        firstTerm.add(sub);
     }
 
     private List<Set<GraphEdge>> findAllMarksSet(SubGraph g, List<GraphEdge> edges,

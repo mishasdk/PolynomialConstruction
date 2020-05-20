@@ -16,7 +16,7 @@ public class GraphBuilder {
         addVertex(vertexNumber);
     }
 
-    public void addEdge(int source, int target, double time) {
+    public void addEdge(int source, int target, String time) {
         edges.add(new GraphEdge(currentEdgeId++, source, target, time));
         edges.add(new GraphEdge(currentEdgeId++, target, source, time));
     }

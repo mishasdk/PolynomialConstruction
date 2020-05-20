@@ -1,30 +1,35 @@
 import numpy as np
 import sympy as sp
 
+from sympy.parsing.sympy_parser import parse_expr
+
 
 def find_polynomial(vector):
-    n = vector[0]
-    m = vector[1]
     # First term R'(T)
+    T = sp.symbols('T')
     sub_graph_number = int(vector[2])
     index = 3
     first_term = 0
-    for num in range(sub_graph_number):
+    for _ in range(sub_graph_number):
         edges_number = int(vector[index])
         index += 1
-        edges_weights = [vector[index + j] * 2 for j in range(edges_number)]
+        edges_weights = [parse_expr(vector[index + j]) * 2 for j in range(edges_number)]
         index += edges_number
         vertex_number = int(vector[index])
         index += 1
         for _ in range(vertex_number):
-            sub = vector[index]
+            sub = int(vector[index])
             index += 1
             args_number = int(vector[index])
             index += 1
-            args = [vector[index + j] for j in range(args_number)]
-            index += args_number
-            sum1 = sum([bernoulli_barns(args[i], edges_weights) for i in range(args_number)])
-            first_term += sum1 * sub
+            sum1 = 0
+            for _ in range(args_number):
+                set_size = int(vector[index])
+                index += 1
+                argument = sum([parse_expr(vector[index + i]) for i in range(set_size)])
+                index += set_size
+                sum1 += bernoulli_barns(argument, edges_weights)
+            first_term += sp.sympify(sum1 * sub)
     # Second term R''(T)
     sub_graph_number = int(vector[index])
     index += 1
@@ -32,30 +37,33 @@ def find_polynomial(vector):
     for _ in range(sub_graph_number):
         edges_number = int(vector[index])
         index += 1
-        edges_weights = [vector[index + j] * 2 for j in range(edges_number)]
+        edges_weights = [parse_expr(vector[index + j]) * 2 for j in range(edges_number)]
         index += edges_number
         vertex_number = int(vector[index])
         index += 1
         for _ in range(vertex_number):
-            j_weight = vector[index] * 2
+            j_weight = parse_expr(vector[index])
             index += 1
             args_number = int(vector[index])
             index += 1
-            args = [vector[index + j] for j in range(args_number)]
-            index += args_number
-            edges_weights.remove(j_weight)
-            sum1 = sum([bernoulli_barns(args[i], edges_weights) for i in range(args_number)])
-            edges_weights.append(j_weight)
+            sum1 = 0
+            edges_weights.remove(j_weight * 2)
+            for _ in range(args_number):
+                set_size = int(vector[index])
+                index += 1
+                argument = sum([parse_expr(vector[index + i]) - j_weight for i in range(set_size)])
+                index += set_size
+                sum1 += bernoulli_barns(argument, edges_weights)
+            edges_weights.append(j_weight * 2)
             second_term += sum1
     assert (index == len(vector))
-    return first_term + second_term
+    return sp.collect(sp.expand(first_term + second_term), T)
 
 
 def bernoulli_barns(S, t):
     T = sp.symbols('T')
     k = len(t)
-    expr = 1 / (np.prod(t))
-    expr *= (T + S) ** k / sp.factorial(k) - 0.5 * sum(t) * (T + S) ** (k - 1) / sp.factorial(k - 1)
+    expr = 1 / np.prod(t) * ((T + S) ** k / sp.factorial(k) - np.sum(t) / 2 * (T + S) ** (k - 1) / sp.factorial(k - 1))
     return sp.expand(expr)
 
 
@@ -72,10 +80,8 @@ def unpack_vector(pathname):
 
 
 def read_vector(pathname):
-    vector = []
     with open(pathname, 'r') as reader:
-        vector = [float(line) for line in reader]
-    return vector
+        return [str(line) for line in reader]
 
-
-print(unpack_vector('data.txt'))
+e = unpack_vector('data.txt')
+print(e)

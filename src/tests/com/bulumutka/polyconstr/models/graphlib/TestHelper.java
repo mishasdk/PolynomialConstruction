@@ -14,7 +14,8 @@ public class TestHelper {
         var num = 0;
         for (int i = 0; i != size; ++i) {
             for (int j = i + 1; j != size; ++j) {
-                builder.addEdge(i, j, sample.get(num++));
+                builder.addEdge(i, j, "sqrt(" + sample.get(num) + ")");
+                ++num;
             }
         }
         builder.setRoot(0);
@@ -25,14 +26,14 @@ public class TestHelper {
         var builder = new GraphBuilder(size);
         var sample = getIndependentSample(size);
         for (int i = 0; i < size; ++i) {
-            builder.addEdge(i, (i + 1) % size, sample.get(i));
+            builder.addEdge(i, (i + 1) % size, "sqrt(" + sample.get(i) + ")");
         }
         builder.setRoot(0);
         return builder.build();
     }
 
-    public static List<Double> getIndependentSample(Integer size) {
-        List<Double> primes = new ArrayList<>(size);
+    public static List<Integer> getIndependentSample(Integer size) {
+        List<Integer> primes = new ArrayList<>(size);
         for (int i = 2; i < 10000; ++i) {
             boolean isPrime = true;
             for (int j = 2; j * j <= i; ++j) {
@@ -41,7 +42,7 @@ public class TestHelper {
                 }
             }
             if (isPrime) {
-                primes.add((double) Math.sqrt(i));
+                primes.add(i);
                 if (primes.size() == size) {
                     break;
                 }

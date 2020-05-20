@@ -44,20 +44,20 @@ class CompressedGraphTest {
 
     @Test
     public void generateCompressedTest1() {
-        var c = new CompressedGraph(generateDenseGraph(3));
+//        var c = new CompressedGraph(generateDenseGraph(3));
+//        var v = c.getVector();
+//        writeVector(v, "data/" + "K3_graph_vector.txt");
+//        c = new CompressedGraph(generateDenseGraph(4));
+//        v = c.getVector();
+//        writeVector(v, "data/" + "K4_graph_vector.txt");
+//
+        var c = new CompressedGraph(generateDenseGraph(5));
         var v = c.getVector();
-        writeVector(v, "data/" + "K3_graph_vector.txt");
-        c = new CompressedGraph(generateDenseGraph(4));
-        v = c.getVector();
-        writeVector(v, "data/" + "K4_graph_vector.txt");
-
-        c = new CompressedGraph(generateDenseGraph(5));
-        v = c.getVector();
         writeVector(v, "data/" + "K5_graph_vector.txt");
 
-        c = new CompressedGraph(generateDenseGraph(6));
-        v = c.getVector();
-        writeVector(v, "data/" + "K6_graph_vector.txt");
+//        var c = new CompressedGraph(generateDenseGraph(6));
+//        var v = c.getVector();
+//        writeVector(v, "data/" + "K6_graph_vector.txt");
     }
 
     @Test

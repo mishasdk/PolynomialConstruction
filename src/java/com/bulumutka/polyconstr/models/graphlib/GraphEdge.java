@@ -6,9 +6,9 @@ public class GraphEdge implements Edge<Integer> {
     public int id;
     int source;
     int target;
-    public double time;
+    public String time;
 
-    public GraphEdge(int id, int source, int target, double time) {
+    public GraphEdge(int id, int source, int target, String time) {
         this.id = id;
         this.source = source;
         this.target = target;

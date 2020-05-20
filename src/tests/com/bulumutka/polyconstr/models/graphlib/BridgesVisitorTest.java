@@ -9,11 +9,11 @@ class BridgesVisitorTest {
     @Test
     public void bridgesTest1() {
         var builder = new GraphBuilder(6);
-        builder.addEdge(1, 2, 1);
-        builder.addEdge(5, 4, 3);
-        builder.addEdge(3, 4, 1);
-        builder.addEdge(0, 4, 1);
-        builder.addEdge(2, 3, 1);
+        builder.addEdge(1, 2, "1");
+        builder.addEdge(5, 4, "1");
+        builder.addEdge(3, 4, "1");
+        builder.addEdge(0, 4, "1");
+        builder.addEdge(2, 3, "1");
         builder.setRoot(1);
         MetricGraph g = builder.build();
         var b = Algorithms.findBridges(g, 0);
@@ -29,7 +29,7 @@ class BridgesVisitorTest {
                 new int[]{7, 14}, new int[]{1, 6}, new int[]{3, 14}, new int[]{0, 8},
                 new int[]{2, 10},};
         for (var p : edges) {
-            builder.addEdge(p[0], p[1], 0);
+            builder.addEdge(p[0], p[1], "0");
         }
         var g = builder.build();
 
@@ -53,8 +53,8 @@ class BridgesVisitorTest {
     @Test
     public void bridgesTest4() {
         var builder = new GraphBuilder(3);
-        builder.addEdge(0, 1, 1.414);
-        builder.addEdge(1, 2, 2.236);
+        builder.addEdge(0, 1, "1");
+        builder.addEdge(1, 2, "1");
         builder.setRoot(0);
         var g = builder.build();
         var b = Algorithms.findBridges(g, 0);
@@ -68,7 +68,7 @@ class BridgesVisitorTest {
         var builder = new GraphBuilder(size);
         for (int i = 0; i != size; ++i) {
             for (int j = i + 1; j != size; ++j) {
-                builder.addEdge(i, j, 0);
+                builder.addEdge(i, j, "0");
             }
         }
         builder.setRoot(0);

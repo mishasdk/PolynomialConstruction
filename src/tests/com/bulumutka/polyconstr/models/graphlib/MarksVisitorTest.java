@@ -9,8 +9,8 @@ class MarksVisitorTest {
     @Test
     public void marksTest1() {
         var builder = new GraphBuilder(3);
-        builder.addEdge(0, 1, 0);
-        builder.addEdge(0, 2, 0);
+        builder.addEdge(0, 1, "0");
+        builder.addEdge(0, 2, "0");
         var g = builder.build();
         var m = Algorithms.findMarks(g, 0, 1);
 
@@ -21,10 +21,10 @@ class MarksVisitorTest {
     @Test
     public void marksTest2() {
         var builder = new GraphBuilder(5);
-        builder.addEdge(0, 1, 0);
-        builder.addEdge(0, 2, 0);
-        builder.addEdge(1, 3, 0);
-        builder.addEdge(3, 4, 0);
+        builder.addEdge(0, 1, "0");
+        builder.addEdge(0, 2, "0");
+        builder.addEdge(1, 3, "0");
+        builder.addEdge(3, 4, "0");
         var g = builder.build();
         var m = Algorithms.findMarks(g, 0, 2);
         assertEquals(1, m.size());
@@ -35,12 +35,12 @@ class MarksVisitorTest {
         m = Algorithms.findMarks(g, 0, 0);
         assertEquals(0, m.size());
 
-        builder.addEdge(4, 1, 0);
+        builder.addEdge(4, 1, "0");
         g = builder.build();
         m = Algorithms.findMarks(g, 0, 4);
         assertEquals(2, m.size());
 
-        builder.addEdge(4, 0, 0);
+        builder.addEdge(4, 0, "0");
         g = builder.build();
         m = Algorithms.findMarks(g, 0, 4);
 

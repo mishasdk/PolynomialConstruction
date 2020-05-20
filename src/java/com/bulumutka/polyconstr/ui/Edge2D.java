@@ -10,9 +10,9 @@ import java.util.List;
 public class Edge2D<Vertex extends Vertex2D> implements Drawable {
     public Vertex source;
     public Vertex target;
-    public double time;
+    public String time;
 
-    public Edge2D(Vertex source, Vertex target, double time) {
+    public Edge2D(Vertex source, Vertex target, String time) {
         this.source = source;
         this.target = target;
         this.time = time;
@@ -29,7 +29,7 @@ public class Edge2D<Vertex extends Vertex2D> implements Drawable {
         g.setStroke(Color.BLACK);
         g.strokeLine(x1, y1, x2, y2);
         g.strokeLine(x1, y1, x2, y2);
-        g.fillText(Double.toString(time), (x1 + x2) / 2 + 10, (y1 + y2) / 2 + 10);
+        g.fillText(time, (x1 + x2) / 2 + 10, (y1 + y2) / 2 + 10);
     }
 
     @Override

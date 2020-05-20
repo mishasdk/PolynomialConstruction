@@ -14,8 +14,8 @@ class CompressedGraphTest {
     @Test
     public void getVectorTest1() {
         var builder = new GraphBuilder(3);
-        builder.addEdge(0, 1, 1);
-        builder.addEdge(1, 2, 1);
+        builder.addEdge(0, 1, "1");
+        builder.addEdge(1, 2, "1");
         builder.setRoot(0);
         var cg = new CompressedGraph(builder.build());
         System.out.println(cg.getVector());
@@ -30,7 +30,7 @@ class CompressedGraphTest {
                 new int[]{7, 14}, new int[]{1, 6}, new int[]{3, 14}, new int[]{0, 8},
                 new int[]{2, 10},};
         for (var p : edges) {
-            builder.addEdge(p[0], p[1], 0);
+            builder.addEdge(p[0], p[1], "1");
         }
         var cg = new CompressedGraph(builder.build());
         System.out.println(cg.getVector());
@@ -44,19 +44,19 @@ class CompressedGraphTest {
 
     @Test
     public void generateCompressedTest1() {
-//        var c = new CompressedGraph(generateDenseGraph(3));
-//        var v = c.getVector();
-//        writeVector(v, "data/" + "K3_graph_vector.txt");
-//        c = new CompressedGraph(generateDenseGraph(4));
-//        v = c.getVector();
-//        writeVector(v, "data/" + "K4_graph_vector.txt");
-//
-        var c = new CompressedGraph(generateDenseGraph(5));
+        var c = new CompressedGraph(generateDenseGraph(3));
         var v = c.getVector();
-        writeVector(v, "data/" + "K5_graph_vector.txt");
+        writeVector(v, "data/" + "K3_graph_vector.txt");
+        c = new CompressedGraph(generateDenseGraph(4));
+        v = c.getVector();
+        writeVector(v, "data/" + "K4_graph_vector.txt");
 
-//        var c = new CompressedGraph(generateDenseGraph(6));
-//        var v = c.getVector();
+//        c = new CompressedGraph(generateDenseGraph(5));
+//        v = c.getVector();
+//        writeVector(v, "data/" + "K5_graph_vector.txt");
+
+//        c = new CompressedGraph(generateDenseGraph(6));
+//        v = c.getVector();
 //        writeVector(v, "data/" + "K6_graph_vector.txt");
     }
 
@@ -65,19 +65,6 @@ class CompressedGraphTest {
         var c = new CompressedGraph(generateDenseGraph(3));
         var v = c.getVector();
         writeVector(v, "data/" + "K3_graph_vector.txt");
-    }
-
-    @Test
-    public void genHGraph() {
-        var b = new GraphBuilder(6);
-        b.addEdge(0, 2, 1.4142135623730951);
-        b.addEdge(0, 3, 1.7320508075688772);
-        b.addEdge(0, 1, 2.23606797749979);
-        b.addEdge(1, 4, 2.6457513110645907);
-        b.addEdge(1, 5, 3.605551275463989);
-        b.setRoot(0);
-        var c = new CompressedGraph(b.build());
-        writeVector(c.getVector(), "data/" + "H_graph_vector.txt");
     }
 
     @Test
@@ -114,12 +101,12 @@ class CompressedGraphTest {
         v = c.getVector();
         writeVector(v, "data/" + "cycle_16_vector.txt");
 
-        c = new CompressedGraph(generateCycle(24));
-        v = c.getVector();
-        writeVector(v, "data/" + "cycle_24_vector.txt");
+//        c = new CompressedGraph(generateCycle(24));
+//        v = c.getVector();
+//        writeVector(v, "data/" + "cycle_24_vector.txt");
     }
 
-    private static void writeVector(List<Double> vector, String filePath) {
+    private static void writeVector(List<Object > vector, String filePath) {
         try {
             var writer = new BufferedWriter(new FileWriter(filePath));
             for (int i = 0; i < vector.size(); ++i) {

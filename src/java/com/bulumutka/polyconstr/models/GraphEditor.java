@@ -71,6 +71,8 @@ public class GraphEditor {
         hasStartVertex = false;
         isEmpty = true;
         builder.reset();
+        stack.clear();
+        vertexNumber = 0;
         mode = EditMode.NONE;
         components.clear();
     }

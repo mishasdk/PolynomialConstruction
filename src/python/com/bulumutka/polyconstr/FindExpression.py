@@ -9,7 +9,7 @@ def find_polynomial(vector):
     sub_graph_number = int(vector[2])
     index = 3
     first_term = 0
-    for num in range(sub_graph_number):
+    for _ in range(sub_graph_number):
         edges_number = int(vector[index])
         index += 1
         edges_weights = [vector[index + j] * 2 for j in range(edges_number)]
@@ -52,19 +52,19 @@ def find_polynomial(vector):
 
 
 def find_k_graph(n, t):
-    m = int(n * (n - 1) / 2)
     n = int(n)
+    m = len(t)
     T = sp.symbols('T')
-    expr = T ** (m - 1) / (2 ** (n - 2) * sp.factorial(m - 1)) * sum(t) / np.prod(t)
-    expr += double_sum(t) / np.prod(t) * T ** (n - 2) / 2 ** (n - 2) / sp.factorial(n - 2)
+    expr = T ** (m - 1) * sum(t) / 2 ** (n - 2) / sp.factorial(m - 1) / np.prod(t)
+    expr += T ** (m - 2) * double_sum(t) / 2 ** (n - 2) / sp.factorial(m - 2) / np.prod(t)
     return sp.expand(expr)
 
 
 def bernoulli_barns(S, t):
     T = sp.symbols('T')
     k = len(t)
-    expr = 1 / (np.prod(t))
-    expr *= (T + S) ** k / sp.factorial(k) + 0.5 * sum(t) * (T + S) ** (k - 1) / sp.factorial(k - 1)
+    expr = 1 / np.prod(t)
+    expr *= (T + S) ** k / sp.factorial(k) - 0.5 * sum(t) * (T + S) ** (k - 1) / sp.factorial(k - 1)
     return sp.expand(expr)
 
 

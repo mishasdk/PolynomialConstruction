@@ -34,5 +34,10 @@ out/
 *.ipr
 *.iws
 
-notebook/polenv/
-notebook/img/
+notebook/
+data/
+META-INF/
+
+data.txt
+release/
+scripts/

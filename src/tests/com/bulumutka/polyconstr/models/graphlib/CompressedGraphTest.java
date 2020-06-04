@@ -51,13 +51,13 @@ class CompressedGraphTest {
         v = c.getVector();
         writeVector(v, "data/" + "K4_graph_vector.txt");
 
-//        c = new CompressedGraph(generateDenseGraph(5));
-//        v = c.getVector();
-//        writeVector(v, "data/" + "K5_graph_vector.txt");
+        c = new CompressedGraph(generateDenseGraph(5));
+        v = c.getVector();
+        writeVector(v, "data/" + "K5_graph_vector.txt");
 
-//        c = new CompressedGraph(generateDenseGraph(6));
-//        v = c.getVector();
-//        writeVector(v, "data/" + "K6_graph_vector.txt");
+        c = new CompressedGraph(generateDenseGraph(6));
+        v = c.getVector();
+        writeVector(v, "data/" + "K6_graph_vector.txt");
     }
 
     @Test
@@ -65,6 +65,13 @@ class CompressedGraphTest {
         var c = new CompressedGraph(generateDenseGraph(3));
         var v = c.getVector();
         writeVector(v, "data/" + "K3_graph_vector.txt");
+    }
+
+    @Test
+    public void generateK4Test() {
+        var c = new CompressedGraph(generateDenseGraph(4));
+        var v = c.getVector();
+        writeVector(v, "data/" + "K4_graph_vector.txt");
     }
 
     @Test

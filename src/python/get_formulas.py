@@ -3,7 +3,6 @@ import sympy as sp
 
 from sympy.parsing.sympy_parser import parse_expr
 
-
 def find_polynomial(vector):
     # First term R'(T)
     T = sp.symbols('T')
@@ -11,15 +10,17 @@ def find_polynomial(vector):
     index = 3
     first_term = 0
     for _ in range(sub_graph_number):
+        vertex_number = int(vector[index])
+        index += 1
         edges_number = int(vector[index])
         index += 1
         edges_weights = [parse_expr(vector[index + j]) * 2 for j in range(edges_number)]
         index += edges_number
-        vertex_number = int(vector[index])
-        index += 1
         for _ in range(vertex_number):
             sub = int(vector[index])
             index += 1
+            if sub is 0:
+                continue
             args_number = int(vector[index])
             index += 1
             sum1 = 0
@@ -35,12 +36,14 @@ def find_polynomial(vector):
     index += 1
     second_term = 0
     for _ in range(sub_graph_number):
+        vertex_number = int(vector[index])
+        index += 1
+        if vertex_number is 0:
+            continue
         edges_number = int(vector[index])
         index += 1
         edges_weights = [parse_expr(vector[index + j]) * 2 for j in range(edges_number)]
         index += edges_number
-        vertex_number = int(vector[index])
-        index += 1
         for _ in range(vertex_number):
             j_weight = parse_expr(vector[index])
             index += 1
@@ -64,6 +67,7 @@ def bernoulli_barns(S, t):
     T = sp.symbols('T')
     k = len(t)
     expr = 1 / np.prod(t) * ((T + S) ** k / sp.factorial(k) - np.sum(t) / 2 * (T + S) ** (k - 1) / sp.factorial(k - 1))
+    expr -= expr.subs(T, 0)
     return sp.expand(expr)
 
 
@@ -83,5 +87,7 @@ def read_vector(pathname):
     with open(pathname, 'r') as reader:
         return [str(line) for line in reader]
 
-e = unpack_vector('data.txt')
-print(e)
+
+if __name__ == '__main__':
+    e = unpack_vector('data.txt')
+    print(e)

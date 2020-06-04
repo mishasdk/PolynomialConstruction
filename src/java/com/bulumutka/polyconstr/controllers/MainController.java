@@ -75,9 +75,8 @@ public class MainController implements Initializable {
         var c = new CompressedGraph(graph);
         var vector = c.getVector();
         SafeWriter.writeVector(vector, "data.txt");
-        Repository.formulas = PythonScript
-                .start("out/production/PolynomialConstruction/com/bulumutka/polyconstr" +
-                        "/get_formulas.py");
+        Repository.formulas = PythonScript.start("get_formulas.py");
+        System.out.println(System.getProperty("user.dir"));
         showCountResult();
     }
 

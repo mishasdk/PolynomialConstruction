@@ -3,7 +3,6 @@ import sympy as sp
 
 from sympy.parsing.sympy_parser import parse_expr
 
-
 def find_polynomial(vector):
     # First term R'(T)
     T = sp.symbols('T')
@@ -88,5 +87,7 @@ def read_vector(pathname):
     with open(pathname, 'r') as reader:
         return [str(line) for line in reader]
 
-e = unpack_vector('data.txt')
-print(e)
+
+if __name__ == '__main__':
+    e = unpack_vector('data.txt')
+    print(e)

@@ -6,7 +6,7 @@ import java.nio.Buffer;
 public class PythonScript {
     public static String start(String script) {
         var builder = new ProcessBuilder();
-        builder.command("python3", script);
+        builder.command("python", script);
         try {
             var p = builder.start();
             var output = new StringBuilder();

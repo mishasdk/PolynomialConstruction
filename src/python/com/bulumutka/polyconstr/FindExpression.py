@@ -12,15 +12,17 @@ def find_polynomial(vector):
     index = 3
     first_term = 0
     for _ in range(sub_graph_number):
+        vertex_number = int(vector[index])
+        index += 1
         edges_number = int(vector[index])
         index += 1
         edges_weights = [parse_expr(vector[index + j]) * 2 for j in range(edges_number)]
         index += edges_number
-        vertex_number = int(vector[index])
-        index += 1
         for _ in range(vertex_number):
             sub = int(vector[index])
             index += 1
+            if sub is 0:
+                continue
             args_number = int(vector[index])
             index += 1
             sum1 = 0
@@ -36,12 +38,14 @@ def find_polynomial(vector):
     index += 1
     second_term = 0
     for _ in range(sub_graph_number):
+        vertex_number = int(vector[index])
+        index += 1
+        if vertex_number is 0:
+            continue
         edges_number = int(vector[index])
         index += 1
         edges_weights = [parse_expr(vector[index + j]) * 2 for j in range(edges_number)]
         index += edges_number
-        vertex_number = int(vector[index])
-        index += 1
         for _ in range(vertex_number):
             j_weight = parse_expr(vector[index])
             index += 1

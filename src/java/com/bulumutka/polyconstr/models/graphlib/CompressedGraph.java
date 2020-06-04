@@ -71,20 +71,30 @@ public class CompressedGraph {
             }
         });
 
-        firstTerm.add(g.getVertexNumber());
-        secondTerm.add(vertexNumberTerm2);
         var allEdges = Algorithms.findEdges(g);
-        for (var edge : allEdges) {
-            firstTerm.add(edge.time);
-            secondTerm.add(edge.time);
+        if (vertexNumberTerm2 != 0) {
+            for (var edge : allEdges) {
+                firstTerm.add(edge.time);
+                secondTerm.add(edge.time);
+            }
+            secondTerm.add(allEdges.size());
+        } else {
+            for (var edge : allEdges) {
+                firstTerm.add(edge.time);
+            }
         }
         firstTerm.add(allEdges.size());
-        secondTerm.add(allEdges.size());
+        firstTerm.add(g.getVertexNumber());
+        secondTerm.add(vertexNumberTerm2);
     }
 
     private void proceedFirstTerm(SubGraph g, Integer vertex, List<Set<GraphEdge>> allMarks) {
         // Only first term
         var sub = graph.outgoingEdges(vertex).size() - g.outgoingEdges(vertex).size();
+        if (sub == 0) {
+            firstTerm.add(sub);
+            return;
+        }
         for (var set : allMarks) {
             for (var markedEdge : set) {
                 firstTerm.add(markedEdge.time);
@@ -95,9 +105,30 @@ public class CompressedGraph {
         firstTerm.add(sub);
     }
 
+    private void proceedSecondTerm(List<Set<GraphEdge>> allMarks, GraphEdge edge) {
+        // Second term
+        for (var set : allMarks) {
+            int count = 0;
+            for (var markedEdge : set) {
+                if (markedEdge.id / 2 != edge.id / 2) {
+                    ++count;
+                    secondTerm.add(markedEdge.time);
+                }
+            }
+            secondTerm.add(count);
+        }
+        secondTerm.add(allMarks.size());
+        secondTerm.add(edge.time);
+    }
+
     private void proceedFirstAndSecondTerm(SubGraph g, Integer vertex,
                                            List<Set<GraphEdge>> allMarks, GraphEdge edge) {
         var sub = graph.outgoingEdges(vertex).size() - g.outgoingEdges(vertex).size();
+        if (sub == 0) {
+            firstTerm.add(0);
+            proceedSecondTerm(allMarks, edge);
+            return;
+        }
         // First and second term
         for (var set : allMarks) {
             int count = 0;

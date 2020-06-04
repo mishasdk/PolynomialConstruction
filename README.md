@@ -13,7 +13,7 @@ This application requires JDK 11, JavaFX 11 and python3 iterpreter.
 
 Now you should unpack archive and edit `run.sh` file, change `PATH_TO_FX` value according to the path of installed JavaFX 11 library. As example: 
 ```
-PATH_TO_FX="/home/misha/Library/javafx-sdk-11.0.2/lib""/home/misha/Library/javafx-sdk-11.0.2/lib"
+PATH_TO_FX="/home/misha/Library/javafx-sdk-11.0.2/lib"
 ```
 
 Execute `run.sh` script and the program will start. 

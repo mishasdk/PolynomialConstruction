@@ -64,6 +64,7 @@ def bernoulli_barns(S, t):
     T = sp.symbols('T')
     k = len(t)
     expr = 1 / np.prod(t) * ((T + S) ** k / sp.factorial(k) - np.sum(t) / 2 * (T + S) ** (k - 1) / sp.factorial(k - 1))
+    expr -= expr.subs(T, 0)
     return sp.expand(expr)
 
 

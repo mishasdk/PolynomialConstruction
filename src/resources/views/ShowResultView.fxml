@@ -8,9 +8,17 @@
             fx:controller="com.bulumutka.polyconstr.controllers.ShowResultController"
             style="-fx-background-color: #fffff6"
             prefHeight="400.0" prefWidth="600.0">
-    <VBox spacing="15" prefWidth="1000">
-        <Label text="Formulas" style="-fx-font-size: 18"/>
-        <TextField editable="false" fx:id="formulasField" style="-fx-font-size: 18"
+    <VBox spacing="15"
+          prefWidth="1000">
+
+        <Label text="Formulas"
+               style="-fx-font-size: 18"/>
+
+        <TextField editable="false"
+                   fx:id="formulasField"
+                   style="-fx-font-size: 18"
                    maxWidth="1000"/>
+
+        <Button text="Copy fromulas" fx:id="copyButton"/>
     </VBox>
 </AnchorPane>

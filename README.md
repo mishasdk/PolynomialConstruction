@@ -21,3 +21,12 @@ PATH_TO_FX="/home/misha/Library/javafx-sdk-11.0.2/lib"
 
 Execute `run.sh` script and the program will start. 
 
+## Instruction for Windows
+The example of run.bat for widows
+
+```
+set PATH_TO_FX="C:\Program Files\Java\javafx-sdk-11.0.2\lib"
+java --module-path %PATH_TO_FX% --add-modules=javafx.controls,javafx.fxml -jar PolynomialConstruction.jar 
+
+```
+

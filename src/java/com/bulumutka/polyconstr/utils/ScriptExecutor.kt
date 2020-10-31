@@ -19,29 +19,32 @@ fun ls() {
     }
 }
 
-fun getFormulasPy(data: List<String>): String {
+fun getFormulasPy(path: String): String {
     try {
-        val command = mutableListOf(PYTHON_COMMAND, PY_WORK_DIR + "get_formulas.py").apply { addAll(data) }
+        val command = listOf(PYTHON_COMMAND, PY_WORK_DIR + "get_formulas.py", path)
         val process = ProcessBuilder(command).start()
         val output = BufferedReader(InputStreamReader(process.inputStream))
         val error = BufferedReader(InputStreamReader(process.errorStream))
-        val exitCode = process.waitFor()
 
-        val lines = output.readLines()
-        val result = StringBuilder()
-        for (line in lines) {
-            result.append(line)
+        var line: String? = output.readLine()
+        var lastLine = ""
+        while (line != null) {
+            println(line)
+            lastLine = line
+            line = output.readLine()
         }
+
+        val exitCode = process.waitFor()
 
         if (exitCode != 0) {
             println("Error: exit code is $exitCode")
             for (line in error.readLines()) {
                 println(line)
             }
-            return "Error while script executing:\n $result"
+            return "Error"
         }
 
-        return result.toString()
+        return lastLine
     } catch (exc: IOException) {
         println("Error: $exc")
         return "Error"

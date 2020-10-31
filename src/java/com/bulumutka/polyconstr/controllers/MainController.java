@@ -71,7 +71,8 @@ public class MainController implements Initializable {
         for (var elem : data) {
             result.add(elem.toString());
         }
-        Repository.formulas = ScriptExecutorKt.getFormulasPy(result);
+        SafeWriter.writeVector(result, "data.txt");
+        Repository.formulas = ScriptExecutorKt.getFormulasPy("data.txt");
         showCountResult();
     }
 

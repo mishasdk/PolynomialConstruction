@@ -41,3 +41,6 @@ META-INF/
 data.txt
 release/
 scripts/
+venv/
+lib/
+__pycache__

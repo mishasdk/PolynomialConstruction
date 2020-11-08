@@ -1,4 +1,4 @@
-package com.bulumutka.polyconstr.models;
+package com.bulumutka.polyconstr.utils;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class SafeWriter {
-    public static void writeVector(List<Object> vector, String filePath) {
+    public static void writeVector(List<String> vector, String filePath) {
         try {
             var writer = new BufferedWriter(new FileWriter(filePath));
             for (int i = 0; i < vector.size(); ++i) {
